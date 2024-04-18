@@ -1,0 +1,42 @@
+.home {
+  height: 100vh;
+  background-color: white;
+}
+
+#fullpage {
+  height: 100%;
+}
+
+/* Estilos generales para la sección que contiene la imagen */
+.home-image1 {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Importante para posicionar el botón sobre la imagen */
+  background-image: url("https://t3.ftcdn.net/jpg/05/35/47/38/360_F_535473874_OWCa2ohzXXNZgqnlzF9QETsnbrSO9pFS.jpg");
+  background-size: cover; /* Cubre todo el espacio disponible sin perder las proporciones */
+  background-position: center; /* Centra la imagen en la sección */
+}
+
+/* Estilos para el botón, asegurando que se mantenga en el centro */
+.button-home {
+  position: absolute; /* Posicionamiento absoluto respecto a su contenedor relativo */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra exactamente el botón */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Si deseas asegurarte de que la altura de cada sección sea de toda la pantalla */
+.section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
