@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import "./CarruselCategories.css";
-import { Link } from "react-router-dom";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Link } from "react-router-dom";
+import "./CarruselCategories.css";
 const CarruselCategories = () => {
-  const [categories, setCategories] = useState([
-    { id: 1, name: "Electrónica" }, // Cambiado 'nombre' por 'name'
+  const [categories] = useState([
+    { id: 1, name: "Electrónica" },
     { id: 2, name: "Gimnasio" },
     { id: 3, name: "Relojes" },
     { id: 4, name: "Moda" },
@@ -16,39 +20,48 @@ const CarruselCategories = () => {
     { id: 9, name: "Zapatos" },
   ]);
 
-  const categorySettings = {
-    dots: false,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    draggable: false,
-  };
-
   return (
     <div className="carruselCategories">
-      <h1>Categorías</h1>
-      {categories.length > 0 ? (
-        <Slider {...categorySettings}>
-          {categories.map((category) => (
-            <div key={category.id} className="carruselCategories-contain">
-              <Link
-                to={`/clothes-shop/category/${category.name}-${category.id}`}
-              >
-                <img
-                  src="https://th.bing.com/th/id/OIP.zgcx04nqAjZgmpGkrEpuSAHaLG?w=195&h=292&c=7&r=0&o=5&dpr=1.5"
-                  alt={category.name}
-                />
-                <span>{category.name}</span>
-              </Link>
-            </div>
-          ))}
-        </Slider>
-      ) : (
-        <div className="homeScreennoCategories">
-          No se encuentran categorías
-        </div>
-      )}
+      <h1>SEASONAL FAVS</h1>
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        spaceBetween={15}
+        slidesPerView={4}
+        /* autoplay={{
+          delay: 3000, // Delay in milliseconds between slides (300 is very fast, consider using a larger value like 3000)
+          disableOnInteraction: false, // This will keep autoplay running even after manual interaction
+        }}*/
+        breakpoints={{
+          260: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          860: {
+            slidesPerView: 4,
+            spaceBetween: 15,
+          },
+        }}
+      >
+        {categories.map((category) => (
+          <SwiperSlide key={category.id} className="carruselCategories-item">
+            <Link
+              className="carruselCategories-item-in"
+              to={`/clothes-shop/category/${category.name}-${category.id}`}
+            >
+              <img
+                src="https://th.bing.com/th/id/OIP.pHuSFWGW1N86TriC7iKSLAHaEo?rs=1&pid=ImgDetMain"
+                alt={category.name}
+              />
+
+              <span>{category.name}</span>
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };

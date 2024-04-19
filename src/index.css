@@ -10,3 +10,48 @@ ul {
 a {
   text-decoration: none;
 }
+.body,
+html {
+  animation: blink 1s ease-in-out 1;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes blink1 {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes blink2 {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .body,
+  html {
+    animation: blink1 1s ease-in-out 1;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .body,
+  html {
+    animation: blink2 1s ease-in-out 1;
+  }
+}

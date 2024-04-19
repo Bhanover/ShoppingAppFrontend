@@ -19,6 +19,7 @@ const TopBar = () => {
   const [isActive, setIsActive] = useState("Mujer");
   const menuRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
+
   const [categorias, setCategorias] = useState({
     Mujer: [
       { id: 1, nombre: "Moda" },
@@ -51,6 +52,37 @@ const TopBar = () => {
     setSearchValue(event.target.value);
   };
 
+  useEffect(() => {
+    const searchBar = document.querySelector(".topBar-search");
+    const searchBar_2 = document.querySelector(".topBar-search-2");
+    const brandName = document.querySelector(".topBar-brand");
+
+    const handleWheel = (event) => {
+      if (event.deltaY > 0) {
+        // Scroll hacia abajo, oculta el buscador y el nombre
+        searchBar.style.transform = "translateY(-100px)";
+        searchBar_2.style.transform = "translateY(-200px)";
+        brandName.style.transform = "translateY(-100px)";
+        searchBar.style.opacity = "0.5";
+        searchBar_2.style.opacity = "0.5";
+        brandName.style.opacity = "0.5";
+      } else {
+        // Scroll hacia arriba, muestra el buscador y el nombre
+        searchBar.style.transform = "translateY(0)";
+        searchBar_2.style.transform = "translateY(0)";
+        brandName.style.transform = "translateY(0)";
+        searchBar.style.opacity = "1";
+        searchBar_2.style.opacity = "1";
+        brandName.style.opacity = "1";
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
   return (
     <header className="topBar">
       <div className="topBar-promo">Envíos y devoluciones gratuitos</div>
