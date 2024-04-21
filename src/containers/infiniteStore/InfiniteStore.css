@@ -1,6 +1,12 @@
 .infiniteStore {
-  width: 100%;
+  width: 95%;
   height: auto;
+  margin: auto;
+  text-align: center;
+}
+.infiniteStore h1 {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .infiniteStore-container {
   display: flex;
@@ -17,7 +23,7 @@
 .infiniteStore-image-container {
   position: relative;
   width: 100%;
-  padding-top: 140%;
+  padding-top: 150%;
   overflow: hidden;
 }
 

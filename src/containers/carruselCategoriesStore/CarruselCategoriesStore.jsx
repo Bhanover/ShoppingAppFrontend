@@ -34,11 +34,11 @@ const CarruselCategoriesStore = () => {
         }}*/
         breakpoints={{
           260: {
-            slidesPerView: 4,
+            slidesPerView: 3,
             spaceBetween: 0,
           },
           480: {
-            slidesPerView: 6,
+            slidesPerView: 4,
             spaceBetween: 0,
           },
           860: {

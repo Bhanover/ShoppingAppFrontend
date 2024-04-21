@@ -31,6 +31,7 @@ const InfiniteStore = () => {
 
   return (
     <div className="infiniteStore">
+      <h1>Mostrando </h1>
       <InfiniteScroll
         dataLength={items.length}
         next={fetchMoreData}
