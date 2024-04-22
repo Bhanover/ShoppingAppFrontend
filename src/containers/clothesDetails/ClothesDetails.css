@@ -68,6 +68,11 @@
     width: 80%;
   }
   .clothesDetails-image-container {
+    width: 500px;
+  }
+}
+@media screen and (max-width: 580px) {
+  .clothesDetails-image-container {
     width: 95%;
   }
 }

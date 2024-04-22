@@ -83,11 +83,7 @@ const ClothesDetails = () => {
     value: size.size,
     label: size.size,
   }));
-  const handleAddToCart = (productId) => {
-    // Aquí manejarías la lógica para añadir el producto al carrito
-    console.log(`Producto ${productId} añadido al carrito`);
-    // Por ejemplo, podrías llamar a un API o actualizar el estado global del carrito
-  };
+
   return (
     <div className="clothesDetails">
       <div className="clothesDetails-image-container">
@@ -144,13 +140,14 @@ const ClothesDetails = () => {
         </div>
         <div className="clothesDetails-info-container-options">
           <Select
+            placeholder="Talla"
             maxMenuHeight={200}
             value={selectedSize}
             onChange={handleChange}
             options={sizeOptions}
             classNamePrefix="custom-select"
           />
-          <AddToCartButton productId={item.id} onAdd={handleAddToCart} />
+          <AddToCartButton product={item} />
         </div>
       </div>
     </div>
