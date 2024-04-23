@@ -14,6 +14,11 @@ a {
 html {
   animation: blink 1s ease-in-out 1;
 }
+table,
+th,
+td {
+  border-collapse: collapse;
+}
 @keyframes blink {
   0%,
   100% {

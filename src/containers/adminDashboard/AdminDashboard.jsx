@@ -6,17 +6,16 @@ import { Outlet } from "react-router-dom";
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [lastWindowWidth, setLastWindowWidth] = useState(window.innerWidth);
-  const [manualToggle, setManualToggle] = useState(false); // Para rastrear el toggle manual
+  const [manualToggle, setManualToggle] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    setManualToggle(true); // Indicar que el toggle fue manual
+    setManualToggle(true);
   };
 
   useEffect(() => {
     const handleResize = () => {
       const currentWidth = window.innerWidth;
-      // Cerrar sidebar automáticamente solo si la ventana se reduce a menos de 768px y el cambio no fue manual
       if (
         currentWidth < 860 &&
         currentWidth < lastWindowWidth &&
@@ -26,7 +25,6 @@ const AdminDashboard = () => {
         setIsSidebarOpen(false);
       }
       if (currentWidth > 860 && !isSidebarOpen) {
-        setManualToggle(false);
         setIsSidebarOpen(true);
       }
       setLastWindowWidth(currentWidth);

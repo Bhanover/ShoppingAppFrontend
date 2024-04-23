@@ -10,7 +10,7 @@
   position: relative;
   width: 350px;
   background: black;
-  transition: all 0.3s ease-in-out;
+  transition: width 0.4s ease-in-out, background 0.4s ease-in-out;
   padding: 30px 10px 10px 10px;
   height: 100%;
 }
@@ -22,15 +22,19 @@
   top: 0;
   z-index: 100;
   background-color: transparent;
-  transition: all 0.5s ease-in-out;
 }
 .adminDashboardSidebar.collapsed .sidebarLink {
-  display: none;
-  transition: all 1s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s linear 0.3s;
 }
+
 .adminDashboardSidebar.expanded .sidebarLink {
-  transition: all 1s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s linear 0.3s;
 }
+
 .adminDashboardSidebar.expanded .sidebarToggle {
   color: white;
 }
@@ -80,6 +84,6 @@
   .adminDashboardSidebar {
     position: absolute;
     height: 100vh;
-    z-index: 999;
+    width: 310px;
   }
 }
