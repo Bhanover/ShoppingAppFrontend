@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ClothesService from "../../service/ClothesService";
-import "./CategoryManagement.css";
+import SubCategoryService from "../../service/SubCategoryService";
+import "./SubCategoryManagement.css";
 import { FaEllipsisV } from "react-icons/fa";
 import { FaUpload, FaImage } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,65 +8,79 @@ import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../loaders/Loader";
 import CategoryService from "../../service/CategoryService";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import Select from "react-select";
 
-const CategoryManagement = () => {
+const SubCategoryManagement = () => {
   const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState({ name: "", description: "" });
-  const [categoryImage, setCategoryImage] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
+  const [newSubCategory, setNewSubCategory] = useState({
+    name: "",
+    description: "",
+  });
+  const [subCategoryImage, setSubCategoryImage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  // Cargar las categorías cuando el componente se monta
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
     loadCategories();
-  }, [currentPage]);
-
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+    loadSubCategories();
+  }, []);
   const loadCategories = async () => {
     try {
-      const res = await CategoryService.fetchAdminCategories();
-      setCategories(res);
+      const res = await CategoryService.obtainSimpleCategories(); // Asegúrate de que este método esté implementado
+      const categoryOptions = res.map((cat) => ({
+        value: cat.id,
+        label: cat.name,
+      }));
+      setCategories(categoryOptions);
+    } catch (error) {
+      toast.error("Error cargando las categorías");
+    }
+  };
+  const loadSubCategories = async () => {
+    try {
+      const res = await SubCategoryService.obtainSubCategories();
+      setSubCategories(res);
     } catch (error) {
       toast.error("Error cargando las categorías");
     }
   };
 
-  const handleAddCategory = async () => {
+  const handleAddSubCategory = async () => {
     setLoading(true);
-    if (!newCategory.name || !newCategory.description || !categoryImage) {
+    if (
+      !newSubCategory.name ||
+      !newSubCategory.description ||
+      !subCategoryImage ||
+      !selectedCategory
+    ) {
       toast.error(
-        "Por favor, completa todos los campos y selecciona una imagen."
+        "Por favor, completa todos los campos, selecciona una imagen y una categoría."
       );
       setLoading(false);
       return;
     }
 
     try {
-      // Utiliza el nuevo método para añadir la categoría con la imagen
-      await CategoryService.addCategoryWithImageNew(
-        newCategory.name,
-        newCategory.description,
-        categoryImage
+      await SubCategoryService.addSubCategory(
+        newSubCategory.name,
+        newSubCategory.description,
+        subCategoryImage,
+        selectedCategory.value
       );
 
-      loadCategories();
-      setNewCategory({ name: "", description: "" }); // Resetear el formulario
-      setCategoryImage(null); // Resetear la imagen
-      toast.success("Categoría añadida con éxito!");
+      loadSubCategories();
+      setNewSubCategory({ name: "", description: "" });
+      setSubCategoryImage(null);
+      setSelectedCategory(null);
+      toast.success("Subcategoría añadida con éxito!");
     } catch (error) {
-      toast.error("Error al añadir la categoría.");
+      toast.error("Error al añadir la subcategoría.");
     } finally {
       setLoading(false);
     }
   };
-
+  /*
   const handleUpdateCategory = async (id) => {
     setLoading(true);
     const formData = new FormData();
@@ -78,7 +92,7 @@ const CategoryManagement = () => {
 
     try {
       await CategoryService.updateCategoryWithImage(id, formData);
-      loadCategories();
+      loadSubCategories();
       setNewCategory({ name: "", description: "" }); // Resetear el formulario
       setCategoryImage(null); // Resetear la imagen
       toast.success("Categoría actualizada con éxito!");
@@ -88,17 +102,19 @@ const CategoryManagement = () => {
       setLoading(false);
     }
   };
-
+*/
   const handleDeleteCategory = async (id) => {
     try {
-      await CategoryService.deleteCategory(id);
-      loadCategories();
+      await SubCategoryService.deleteSubCategory(id);
+      loadSubCategories();
       toast.success("Categoría eliminada con éxito.");
     } catch (error) {
       toast.error("Error al eliminar la categoría.");
     }
   };
-
+  const handleCategoryChange = (selectedOption) => {
+    setSelectedCategory(selectedOption);
+  };
   return (
     <div className="categoryManagement">
       <ToastContainer />
@@ -108,9 +124,9 @@ const CategoryManagement = () => {
           className="categoryManagement-inputField"
           type="text"
           placeholder="Nombre"
-          value={newCategory.name}
+          value={newSubCategory.name}
           onChange={(e) =>
-            setNewCategory({ ...newCategory, name: e.target.value })
+            setNewSubCategory({ ...newSubCategory, name: e.target.value })
           }
           disabled={loading}
         />
@@ -118,30 +134,43 @@ const CategoryManagement = () => {
           className="categoryManagement-inputField"
           type="text"
           placeholder="Descripción"
-          value={newCategory.description}
+          value={newSubCategory.description}
           onChange={(e) =>
-            setNewCategory({ ...newCategory, description: e.target.value })
+            setNewSubCategory({
+              ...newSubCategory,
+              description: e.target.value,
+            })
           }
           disabled={loading}
         />
+        <div>
+          <Select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            options={categories}
+            className="categoryManagement-select"
+            placeholder="Selecciona una categoría"
+            isDisabled={loading}
+          />
+        </div>
         <label className="categoryManagement-iconLabel">
-          {categoryImage ? (
-            <img src={URL.createObjectURL(categoryImage)} alt="Preview" />
+          {subCategoryImage ? (
+            <img src={URL.createObjectURL(subCategoryImage)} alt="Preview" />
           ) : (
             <FaUpload />
           )}
           <input
             className="categoryManagement-inputFile"
             type="file"
-            onChange={(e) => setCategoryImage(e.target.files[0])}
+            onChange={(e) => setSubCategoryImage(e.target.files[0])}
             style={{ display: "none" }}
             disabled={loading}
           />
         </label>
         <button
           className="categoryManagement-button"
-          onClick={handleAddCategory}
-          disabled={loading} // Deshabilita el botón mientras se carga
+          onClick={handleAddSubCategory}
+          disabled={loading}
         >
           {loading ? <Loader /> : "Añadir Categoría"}
         </button>
@@ -158,26 +187,29 @@ const CategoryManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {categories.map((category) => (
-              <React.Fragment key={category.id}>
+            {subCategories.map((subCategories) => (
+              <React.Fragment key={subCategories.id}>
                 <tr>
-                  <td>{category.name}</td>
-                  <td>{category.description}</td>
+                  <td>{subCategories.name}</td>
+                  <td>{subCategories.description}</td>
                   <td>
-                    <img src={category.categoryImage} alt={category.name} />
+                    <img
+                      src={subCategories.subCategoryImage}
+                      alt={subCategories.name}
+                    />
                   </td>
-                  <td>
-                    {category.subCategories.map((subCategory) => (
-                      <p key={subCategory.id}>{subCategory.name}</p>
-                    ))}
-                  </td>
+                  <td>{subCategories.categoryName}</td>
                   <td className="categoryManagement-table-actions">
                     <div>
-                      <button onClick={() => handleUpdateCategory(category.id)}>
+                      <button
+                      /*   onClick={() => handleUpdateCategory(subCategories.id)}*/
+                      >
                         <FaEdit />
                         Editar
                       </button>
-                      <button onClick={() => handleDeleteCategory(category.id)}>
+                      <button
+                        onClick={() => handleDeleteCategory(subCategories.id)}
+                      >
                         <FaTrashAlt />
                         Eliminar
                       </button>
@@ -189,16 +221,9 @@ const CategoryManagement = () => {
           </tbody>
         </table>
       </div>
-      <div className="pagination-controls">
-        <button onClick={handlePreviousPage} disabled={currentPage === 0}>
-          Anterior
-        </button>
-        <span>Página {currentPage + 1}</span>
-        <button onClick={handleNextPage}>Siguiente</button>
-      </div>
+      <div className="pagination-controls"></div>
     </div>
   );
 };
 
-export default CategoryManagement;
-/*     */
+export default SubCategoryManagement;
