@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import axios from "axios";
 
 import { CSSTransition } from "react-transition-group";
 
@@ -20,30 +21,25 @@ const TopBar = () => {
   const menuRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
 
-  const [categorias, setCategorias] = useState({
-    Mujer: [
-      { id: 1, nombre: "Moda" },
-      { id: 2, nombre: "Accesorios" },
-      { id: 3, nombre: "Zapatos" },
-      { id: 4, nombre: "Moda" },
-      { id: 5, nombre: "Accesorios" },
-      { id: 6, nombre: "Zapatos" },
-      { id: 7, nombre: "Moda" },
-      { id: 8, nombre: "Accesorios" },
-      { id: 9, nombre: "Zapatos" },
-    ],
-    Hombre: [
-      { id: 10, nombre: "Electrónica" },
-      { id: 11, nombre: "Gimnasio" },
-      { id: 12, nombre: "Relojes" },
-      { id: 13, nombre: "Moda" },
-      { id: 14, nombre: "Accesorios" },
-      { id: 15, nombre: "Zapatos" },
-      { id: 16, nombre: "Moda" },
-      { id: 17, nombre: "Accesorios" },
-      { id: 18, nombre: "Zapatos" },
-    ],
-  });
+  const [categorias, setCategorias] = useState({ Mujer: [], Hombre: [] });
+
+  // Función para cargar las categorías desde el backend
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8081/api/simple-categories"
+      );
+      // Suponiendo que response.data es un array de categorías
+      setCategorias({ Mujer: response.data, Hombre: response.data });
+    } catch (error) {
+      console.error("Error al cargar las categorías:", error);
+    }
+  };
+
+  // Cargar categorías al montar el componente
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   const menuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -136,17 +132,12 @@ const TopBar = () => {
               <ul className="topBar-nav-menu-categories-names">
                 {categorias[isActive].map((categoria) => (
                   <li key={categoria.id}>
-                    <Link
-                      to={`/${categoria.nombre}`}
-                      alt={`/${categoria.nombre}`}
-                    >
+                    <Link to={`/${categoria.name}`} alt={`/${categoria.name}`}>
                       <img
-                        src="https://th.bing.com/th/id/OIP.zgcx04nqAjZgmpGkrEpuSAHaLG?w=195&h=292&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                        src={categoria.categoryImage}
                         alt={`Imagen de ${categoria.nombre}`}
                       />
-                      <span className="categoria-texto">
-                        {categoria.nombre}
-                      </span>
+                      <span className="categoria-texto">{categoria.name}</span>
                     </Link>
                   </li>
                 ))}

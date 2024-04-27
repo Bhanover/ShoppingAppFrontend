@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
@@ -7,18 +8,31 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import "./CarruselCategories.css";
+
 const CarruselCategories = () => {
-  const [categories] = useState([
-    { id: 1, name: "Electrónica" },
-    { id: 2, name: "Gimnasio" },
-    { id: 3, name: "Relojes" },
-    { id: 4, name: "Moda" },
-    { id: 5, name: "Accesorios" },
-    { id: 6, name: "Zapatos" },
-    { id: 7, name: "Moda" },
-    { id: 8, name: "Accesorios" },
-    { id: 9, name: "Zapatos" },
-  ]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8081/api/simple-categories"
+        ); // Asegúrate de tener la URL correcta
+        setCategories(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) return <p>Cargando categorías...</p>;
+  if (error) return <p>Error al cargar las categorías: {error.message}</p>;
 
   return (
     <div className="carruselCategories">
@@ -27,10 +41,6 @@ const CarruselCategories = () => {
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={15}
         slidesPerView={4}
-        /* autoplay={{
-          delay: 3000, // Delay in milliseconds between slides (300 is very fast, consider using a larger value like 3000)
-          disableOnInteraction: false, // This will keep autoplay running even after manual interaction
-        }}*/
         breakpoints={{
           260: {
             slidesPerView: 2,
@@ -53,10 +63,9 @@ const CarruselCategories = () => {
               to={`/clothes-shop/category/${category.name}-${category.id}`}
             >
               <img
-                src="https://th.bing.com/th/id/OIP.pHuSFWGW1N86TriC7iKSLAHaEo?rs=1&pid=ImgDetMain"
+                src={category.categoryImage || "default-image-url"} // Usar una imagen por defecto si no hay imagen
                 alt={category.name}
               />
-
               <span>{category.name}</span>
             </Link>
           </SwiperSlide>
