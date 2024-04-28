@@ -1,0 +1,16 @@
+.buttonHome {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+.buttonHome a {
+  background-color: transparent;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  color: white;
+  cursor: pointer;
+}
+.buttonHome a:hover {
+  color: rgb(176, 176, 176);
+}
