@@ -430,6 +430,12 @@ const AddClothingItem = () => {
     { value: "CLOTHING", label: "Ropa" },
     { value: "SHOES", label: "Zapatos" },
   ];
+  const imageTypeOptions = [
+    { value: "main", label: "Principal" },
+    { value: "secondary", label: "Secundario" },
+    { value: "additional", label: "Adicional" },
+  ];
+
   const getFiles = (files) => {
     const images = files.map((file, index) => ({
       name: file.name,
@@ -480,6 +486,17 @@ const AddClothingItem = () => {
       toast.error("Please select a size before adding");
     }
   };
+  const updateImageType = (index, newType) => {
+    const updatedImages = formData.images.map((img, i) => {
+      if (i === index) {
+        return { ...img, type: newType };
+      }
+      return img;
+    });
+
+    setFormData({ ...formData, images: updatedImages });
+  };
+
   const handleSizeSelect = (selectedOption) => {
     setSelectedSize(selectedOption);
     setSelectedStock(0); // Esto reseteará el stock cada vez que cambies el tamaño
@@ -551,6 +568,15 @@ const AddClothingItem = () => {
                     placeholder="Orden" // Clarificación del propósito del campo
                     value={img.orderIndex}
                     onChange={(e) => updateImageOrder(index, e.target.value)}
+                  />
+                  <Select
+                    classNamePrefix="custom-select-image-type"
+                    options={imageTypeOptions}
+                    value={imageTypeOptions.find(
+                      (option) => option.value === img.type
+                    )}
+                    onChange={(option) => updateImageType(index, option.value)}
+                    placeholder="Tipo de imagen"
                   />
                 </div>
               ))}

@@ -67,18 +67,32 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+.image-info .custom-select-image-type__control {
+  min-width: 60px; /* Aumenta el ancho mínimo para acomodar textos más largos */
+  height: 25px;
+  font-size: 10px;
+  padding: 0;
+}
+.image-info .custom-select-image-type__indicator {
+  padding: 0;
+  width: 10px;
+  font-size: 10px;
+}
+.image-info .custom-select-image-type__menu {
+  font-size: 10px;
+}
 .addClothingItemFile .image-details {
   display: flex;
   flex-direction: column;
-  width: 40px;
+  width: 60px;
 }
 .addClothingItemFile .image-details input {
-  width: 40px;
+  width: 100%;
   height: auto;
 }
 .addClothingItemFile .image-container {
   position: relative;
-  width: 40px;
+  width: 100%;
   height: 40px;
   background-color: black;
 }
@@ -89,7 +103,7 @@
   height: 100%;
   left: 0;
   top: 0;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .addClothingItemFile .image-container button {
