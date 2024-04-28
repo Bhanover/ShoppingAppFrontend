@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
 import CheckoutButton from "../../components/checkoutButton/CheckoutButton";
-
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
 
@@ -13,6 +12,7 @@ const Cart = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
   const getQuantityOptions = (quantity) => [
     { value: 1, label: "1 ud" },
     { value: 2, label: "2 ud" },
@@ -20,8 +20,9 @@ const Cart = () => {
     { value: 4, label: "4 ud" },
     { value: 5, label: "5 ud" },
     { value: 6, label: "6 ud" },
-    ...(quantity > 6 ? [{ value: quantity, label: "+6" }] : []),
+    ...(quantity > 6 ? [{ value: quantity, label: `${quantity} ud` }] : []),
   ];
+
   const handleCheckout = () => {
     console.log("Procesando el pedido...");
   };
@@ -30,30 +31,40 @@ const Cart = () => {
     <div className="cart">
       <div className="cart-container">
         {cartItems.map((item) => (
-          <div key={item.id} className="cart-item">
+          <div
+            key={`${item.id}-${item.selectedSizeLabel}`}
+            className="cart-item"
+          >
             <img
-              src="https://static.vecteezy.com/system/resources/thumbnails/017/323/709/small/close-up-of-a-reptile-on-a-tree-branch-set-against-a-stunning-hd-natural-background-wallpaper-photo.jpg"
+              src={item.images.find((image) => image.type === "main")?.imageUrl}
               alt={item.name}
             />
             <div>
               <h4>{item.name}</h4>
               <h5>{item.price} €</h5>
-              <p>{item.quantity} ud</p>
-              <button onClick={() => removeFromCart(item.id)}>
+              <p>
+                {item.quantity} ud - Talla: {item.selectedSizeLabel}
+              </p>
+              <button
+                onClick={() => removeFromCart(item.id, item.selectedSizeLabel)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </button>
-
               <div className="cart-item-subtotal">
                 <h5>Subtotal: {(item.price * item.quantity).toFixed(2)} €</h5>
-                <div className="cart-item-quantity">
-                  <Select
-                    options={getQuantityOptions(item.quantity)}
-                    value={getQuantityOptions(item.quantity).find(
-                      (option) => option.value === item.quantity
-                    )}
-                    onChange={(option) => updateQuantity(item.id, option.value)}
-                  />
-                </div>
+                <Select
+                  options={getQuantityOptions(item.quantity)}
+                  value={getQuantityOptions(item.quantity).find(
+                    (option) => option.value === item.quantity
+                  )}
+                  onChange={(option) =>
+                    updateQuantity(
+                      item.id,
+                      item.selectedSizeLabel,
+                      option.value
+                    )
+                  }
+                />
               </div>
             </div>
           </div>

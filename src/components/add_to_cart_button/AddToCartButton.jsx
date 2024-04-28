@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { CartContext } from "../../context/cartContext/CartContext";
 import "./AddToCartButton.css";
-const AddToCartButton = ({ product }) => {
+const AddToCartButton = ({ product, selectedSize }) => {
   const { addToCart } = useContext(CartContext);
 
   const handleClick = () => {
-    console.log("Intentando añadir al carrito:", product);
-    addToCart(product);
+    console.log("Intentando añadir al carrito:", selectedSize);
+    addToCart(product, selectedSize);
   };
 
   return (
