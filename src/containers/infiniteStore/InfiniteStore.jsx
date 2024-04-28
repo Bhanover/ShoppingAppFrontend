@@ -10,15 +10,20 @@ const InfiniteStore = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [loadedItems, setLoadedItems] = useState([]);
-  const pageSize = 8; // Cantidad de items a mostrar en cada carga
+  const pageSize = 8;
 
   useEffect(() => {
-    // Llama a la API al cargar el componente
     axios
       .get("http://localhost:8081/api/subcategories/1/products")
       .then((response) => {
-        setLoadedItems(response.data); // Guarda todos los productos recibidos
-        setItems(response.data.slice(0, pageSize)); // Muestra los primeros 'pageSize' productos
+        const processedItems = response.data.map((item) => ({
+          ...item,
+          mainImage: item.mainImageUrl,
+          hoverImage: item.secondaryImageUrl,
+        }));
+
+        setLoadedItems(processedItems);
+        setItems(processedItems.slice(0, pageSize));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -28,7 +33,7 @@ const InfiniteStore = () => {
 
   const fetchMoreData = () => {
     if (items.length >= loadedItems.length) {
-      setHasMore(false); // No más datos para cargar
+      setHasMore(false);
       return;
     }
     const nextItems = loadedItems.slice(items.length, items.length + pageSize);
@@ -46,21 +51,21 @@ const InfiniteStore = () => {
         scrollThreshold={0.7}
       >
         <div className="infiniteStore-container">
-          {items.map((item) => (
-            <div key={item.id} className="infiniteStore-item-container">
+          {items.map((item, index) => (
+            <div key={index} className="infiniteStore-item-container">
               <Link to="/" className="infiteStore-item-link">
                 <div className="infiniteStore-image-container">
                   <LazyLoadImage
-                    alt={item.name}
-                    src={item.image}
+                    alt={`${item.name} - principal`}
+                    src={item.mainImage}
                     effect="opacity"
                     scrollPosition={0}
                     threshold={300}
                     className="infiniteStore-image-main"
                   />
                   <LazyLoadImage
-                    alt={item.name}
-                    src={item.hoverImage || item.image} // Usa imagen principal si hoverImage no está disponible
+                    alt={`${item.name} - secundaria`}
+                    src={item.hoverImage || item.mainImage}
                     effect="opacity"
                     scrollPosition={0}
                     threshold={300}
@@ -69,8 +74,7 @@ const InfiniteStore = () => {
                 </div>
                 <div className="infiniteStore-details-container">
                   <p>{item.name}</p>
-                  <p>1212</p>{" "}
-                  {/* Este valor parece estático, considera actualizarlo si es necesario */}
+                  <p>{item.price}</p>
                 </div>
               </Link>
             </div>
