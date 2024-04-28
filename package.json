@@ -10,22 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+
+    "axios": "^1.6.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-lazyload": "^3.2.1",
+    "react-router-dom": "^6.22.3",
+    "swiper": "^11.1.1"
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fullpage/react-fullpage": "^0.1.42",
-    "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "fullpage.js": "^4.0.22",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
     "react-slick": "^0.30.2",
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.1.1"
 
   },
   "devDependencies": {
