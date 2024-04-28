@@ -1,6 +1,4 @@
-import { useState } from "react";
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
+
 import CarruselCategoriesStore from "./containers/carruselCategoriesStore/CarruselCategoriesStore";
 import Store from "./pages/store/Store";
 import ContactDetails from "./containers/contactDetails/ContactDetails";
@@ -9,7 +7,7 @@ import Container from "./containers/container/Container";
 import CarruselCategories from "./containers/carruselCategories/CarruselCategories";
 import NewsletterSignUp from "./containers/newsletter_sign_up/NewsletterSignUp";
 import BottomBar from "./containers/bottomBar/BottomBar";
-
+import AdminLogin from "./containers/adminLogin/AdminLogin";
 
 import ClothesDetails from "./containers/clothesDetails/ClothesDetails";
 import Cart from "./containers/cart/Cart";
@@ -25,6 +23,7 @@ function App() {
         <Route path="/clothes" element={<Clothes />}></Route>
 <Route path="/store" element={<Store />}></Route>
       <Route path="/contact" element={<ContactDetails />}></Route>
+      <Route path="/admin" element={<AdminLogin />}></Route>
 
       <Route path="/bottom" element={<BottomBar />}></Route>
 
@@ -35,6 +34,7 @@ function App() {
       </Route>
       </Routes>
     </CartProvider>
+
   );
 }
 
