@@ -11,10 +11,19 @@ import NewsletterSignUp from "./containers/newsletter_sign_up/NewsletterSignUp";
 import BottomBar from "./containers/bottomBar/BottomBar";
 
 
+import ClothesDetails from "./containers/clothesDetails/ClothesDetails";
+import Cart from "./containers/cart/Cart";
+import { CartProvider } from "./context/cartContext/CartContext";
+import Clothes from "./pages/clothes/Clothes";
+
 function App() {
   return (
-    <Routes>
-    <Route path="/store" element={<Store />}></Route>
+    <CartProvider>
+      <Routes>
+        <Route path="/clo" element={<ClothesDetails />}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/clothes" element={<Clothes />}></Route>
+<Route path="/store" element={<Store />}></Route>
       <Route path="/contact" element={<ContactDetails />}></Route>
 
       <Route path="/bottom" element={<BottomBar />}></Route>
@@ -24,7 +33,8 @@ function App() {
       <Route path="/" element={<Container />}>
         <Route path="/home" element={<Home />}></Route>
       </Route>
-    </Routes>
+      </Routes>
+    </CartProvider>
   );
 }
 
