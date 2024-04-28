@@ -1,0 +1,74 @@
+.contactMain {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid white;
+  background-color: rgba(0, 0, 0);
+}
+.contactMain h1 {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 10px;
+}
+.contactMain-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contactMain-form input[type="text"],
+.contactMain-form input[type="email"],
+.contactMain-form select,
+.contactMain-form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+}
+.contactMain-form option {
+  background-color: black;
+}
+.contactMain-form textarea {
+  height: 100px;
+  resize: none;
+}
+
+.contactMain-form button {
+  padding: 10px 15px;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: transparent;
+
+  transition: background-color 0.3s ease;
+}
+
+.contactMain-form button:hover {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(136, 110, 188) 0%,
+    rgba(233, 129, 196, 1) 79%
+  );
+  color: white;
+}
+@media only screen and (max-width: 860px) {
+  .contactMain {
+    max-width: 500px;
+    transition: all 0.3s ease-in-out;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .contactMain {
+    max-width: 350px;
+    margin-top: 20px;
+  }
+}
