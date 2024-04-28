@@ -1,25 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, Scrollbar } from "swiper/modules";
-import "swiper/css/scrollbar";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import { Link } from "react-router-dom";
 import "./CarruselCategoriesStore.css";
-const CarruselCategoriesStore = () => {
-  const [categories] = useState([
-    { id: 1, name: "Electrónica" },
-    { id: 2, name: "Gimnasio" },
-    { id: 3, name: "Relojes" },
-    { id: 4, name: "Moda" },
-    { id: 5, name: "Accesorios" },
-    { id: 6, name: "Zapatos" },
-    { id: 7, name: "Moda" },
-    { id: 8, name: "Accesorios" },
-    { id: 9, name: "Zapatos" },
-  ]);
+
+const CarruselCategoriesStore = ({ categoryId }) => {
+  const [subCategories, setSubCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  categoryId = 1;
+  useEffect(() => {
+    if (categoryId) {
+      setLoading(true);
+      axios
+        .get(`http://localhost:8081/api/categories/${categoryId}/subcategories`)
+        .then((response) => {
+          setSubCategories(response.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Error loading subcategories", err);
+          setError(err);
+          setLoading(false);
+        });
+    }
+  }, [categoryId]);
+
+  if (loading) return <p>Loading subcategories...</p>;
+  if (error) return <p>Error loading subcategories: {error.message}</p>;
 
   return (
     <div className="carruselCategoriesStore">
@@ -28,40 +41,26 @@ const CarruselCategoriesStore = () => {
         spaceBetween={0}
         slidesPerView={6}
         scrollbar={{ draggable: true }}
-        /* autoplay={{
-          delay: 3000, // Delay in milliseconds between slides (300 is very fast, consider using a larger value like 3000)
-          disableOnInteraction: false, // This will keep autoplay running even after manual interaction
-        }}*/
         breakpoints={{
-          260: {
-            slidesPerView: 3,
-            spaceBetween: 0,
-          },
-          480: {
-            slidesPerView: 4,
-            spaceBetween: 0,
-          },
-          860: {
-            slidesPerView: 7,
-            spaceBetween: 0,
-          },
+          260: { slidesPerView: 3, spaceBetween: 0 },
+          480: { slidesPerView: 4, spaceBetween: 0 },
+          860: { slidesPerView: 7, spaceBetween: 0 },
         }}
       >
-        {categories.map((category) => (
+        {subCategories.map((subCategory) => (
           <SwiperSlide
-            key={category.id}
+            key={subCategory.id}
             className="carruselCategoriesStore-item"
           >
             <Link
+              to={`/subcategory/${subCategory.id}`}
               className="carruselCategoriesStore-item-in"
-              to={`/clothes-shop/category/${category.name}-${category.id}`}
             >
               <img
-                src="https://th.bing.com/th/id/OIP.pHuSFWGW1N86TriC7iKSLAHaEo?rs=1&pid=ImgDetMain"
-                alt={category.name}
+                src={subCategory.subCategoryImage || "default-image-url"}
+                alt={subCategory.name}
               />
-
-              <span>{category.name}</span>
+              <span>{subCategory.name}</span>
             </Link>
           </SwiperSlide>
         ))}

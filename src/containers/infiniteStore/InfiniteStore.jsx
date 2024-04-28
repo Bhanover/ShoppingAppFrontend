@@ -2,31 +2,37 @@ import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/opacity.css"; // Importa el efecto de opacidad
+import axios from "axios";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 import "./InfiniteStore.css";
 
 const InfiniteStore = () => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [loadedItems, setLoadedItems] = useState([]);
+  const pageSize = 8; // Cantidad de items a mostrar en cada carga
 
   useEffect(() => {
-    fetchMoreData();
+    // Llama a la API al cargar el componente
+    axios
+      .get("http://localhost:8081/api/subcategories/1/products")
+      .then((response) => {
+        setLoadedItems(response.data); // Guarda todos los productos recibidos
+        setItems(response.data.slice(0, pageSize)); // Muestra los primeros 'pageSize' productos
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setHasMore(false);
+      });
   }, []);
 
   const fetchMoreData = () => {
-    if (items.length >= 50) {
-      setHasMore(false);
+    if (items.length >= loadedItems.length) {
+      setHasMore(false); // No más datos para cargar
       return;
     }
-    const startId = items.length + 1;
-    const newItems = Array.from({ length: 8 }, (_, i) => ({
-      id: startId + i,
-      name: `Item ${startId + i}`,
-      image: "https://via.placeholder.com/150",
-      hoverImage: "https://via.placeholder.com/150/ff0000/FFFFFF",
-    }));
-
-    setItems(items.concat(newItems));
+    const nextItems = loadedItems.slice(items.length, items.length + pageSize);
+    setItems(items.concat(nextItems));
   };
 
   return (
@@ -54,7 +60,7 @@ const InfiniteStore = () => {
                   />
                   <LazyLoadImage
                     alt={item.name}
-                    src={item.hoverImage}
+                    src={item.hoverImage || item.image} // Usa imagen principal si hoverImage no está disponible
                     effect="opacity"
                     scrollPosition={0}
                     threshold={300}
@@ -63,7 +69,8 @@ const InfiniteStore = () => {
                 </div>
                 <div className="infiniteStore-details-container">
                   <p>{item.name}</p>
-                  <p>1212</p>
+                  <p>1212</p>{" "}
+                  {/* Este valor parece estático, considera actualizarlo si es necesario */}
                 </div>
               </Link>
             </div>
@@ -75,3 +82,92 @@ const InfiniteStore = () => {
 };
 
 export default InfiniteStore;
+/*
+
+export default InfiniteStore;
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
+import "./InfiniteStore.css";
+
+const InfiniteStore = ({ subCategoryId = 1 }) => {
+  const [allItems, setAllItems] = useState([]);
+  const [visibleItems, setVisibleItems] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const itemsPerPage = 10; // Define cuántos productos quieres cargar por página
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8081/api/subcategories/${subCategoryId}/products`)
+      .then((response) => {
+        setAllItems(response.data);
+        setVisibleItems(response.data.slice(0, itemsPerPage));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [subCategoryId]);
+
+  const fetchMoreData = () => {
+    if (visibleItems.length >= allItems.length) {
+      setHasMore(false);
+      return;
+    }
+    setTimeout(() => {
+      setVisibleItems(
+        visibleItems.concat(
+          allItems.slice(
+            visibleItems.length,
+            visibleItems.length + itemsPerPage
+          )
+        )
+      );
+    }, 1500);
+  };
+
+  return (
+    <div className="infiniteStore">
+      <h1>Mostrando Productos</h1>
+      <InfiniteScroll
+        dataLength={visibleItems.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<h4>Cargando...</h4>}
+        scrollThreshold={0.7}
+      >
+        <div className="infiniteStore-container">
+          {visibleItems.map((item, index) => (
+            <div key={index} className="infiniteStore-item-container">
+              <Link
+                to={`/product/${item.id}`}
+                className="infiteStore-item-link"
+              >
+                <div className="infiniteStore-image-container">
+                  <LazyLoadImage
+                    alt={item.name}
+                    src={
+                      item.images[0]?.imageUrl ||
+                      "https://via.placeholder.com/150"
+                    }
+                    effect="opacity"
+                    className="infiniteStore-image-main"
+                  />
+                </div>
+                <div className="infiniteStore-details-container">
+                  <p>{item.name}</p>
+                  <p>{item.price}</p>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </InfiniteScroll>
+    </div>
+  );
+};
+
+export default InfiniteStore;
+*/
