@@ -1,0 +1,89 @@
+.adminDashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-direction: row;
+  overflow-y: hidden;
+}
+
+.adminDashboardSidebar {
+  position: relative;
+  width: 350px;
+  background: black;
+  transition: width 0.4s ease-in-out, background 0.4s ease-in-out;
+  padding: 30px 10px 10px 10px;
+  height: 100%;
+}
+
+.adminDashboardSidebar.collapsed {
+  width: 25px;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  background-color: transparent;
+}
+.adminDashboardSidebar.collapsed .sidebarLink {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s linear 0.3s;
+}
+
+.adminDashboardSidebar.expanded .sidebarLink {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s linear 0.3s;
+}
+
+.adminDashboardSidebar.expanded .sidebarToggle {
+  color: white;
+}
+.sidebarToggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.sidebarLink {
+  display: block;
+  width: 300px;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.sidebarLink:hover {
+  background-color: #555;
+}
+
+.adminDashboardContent {
+  color: rgb(0, 0, 0);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: green;
+}
+.adminDashboardContent h1 {
+  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  background-color: rgb(185, 184, 184);
+}
+
+@media screen and (max-width: 860px) {
+  .adminDashboardSidebar {
+    position: absolute;
+    height: 100vh;
+    width: 310px;
+  }
+}

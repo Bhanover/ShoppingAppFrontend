@@ -13,11 +13,21 @@ import ClothesDetails from "./containers/clothesDetails/ClothesDetails";
 import Cart from "./containers/cart/Cart";
 import { CartProvider } from "./context/cartContext/CartContext";
 import Clothes from "./pages/clothes/Clothes";
+import AdminDashboard from "./containers/adminDashboard/AdminDashboard";
+import AdminManagement from "./containers/adminManagement/AdminManagement";
+import CategoryManagement from "./containers/categoryManagement/CategoryManagement";
+import AddClothingItem from "./containers/addClothingItem/AddClothingItem";
+import SubCategoryManagement from "./containers/subCategoryManagement/SubCategoryManagement";
 
 function App() {
   return (
     <CartProvider>
       <Routes>
+      <Route path="/adminDash" element={<AdminDashboard />}></Route>
+      <Route path="/adminM" element={<AdminManagement />}></Route>
+      <Route path="/categoryM" element={<CategoryManagement />}></Route>
+      <Route path="/add" element={<AddClothingItem />}></Route>
+      <Route path="/subcategoryM" element={<SubCategoryManagement />}></Route>
         <Route path="/clo" element={<ClothesDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/clothes" element={<Clothes />}></Route>
@@ -34,7 +44,6 @@ function App() {
       </Route>
       </Routes>
     </CartProvider>
-
   );
 }
 

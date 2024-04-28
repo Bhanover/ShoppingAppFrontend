@@ -1,0 +1,67 @@
+.clothing-management-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.clothing-management-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+.show-list-button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.show-list-button svg {
+  margin-right: 5px;
+}
+
+.clothing-list {
+  list-style: none;
+  padding: 0;
+}
+
+.clothing-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.clothing-item span {
+  flex-grow: 1;
+  margin-right: 10px; /* Añadir margen para separar del botón */
+  word-wrap: break-word; /* Ajustar palabras largas */
+  word-break: break-all; /* Romper palabras para ajustar al ancho */
+  max-width: 70%; /* Limitar el ancho del texto */
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

@@ -3,6 +3,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+table,
+th,
+td {
+  border-collapse: collapse;
+
 }
 ul {
   list-style: none;
@@ -13,6 +19,7 @@ a {
 .body,
 html {
   animation: blink 1s ease-in-out 1;
+
 }
 @keyframes blink {
   0%,
