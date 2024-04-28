@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Cambiado de height a min-height */
+  width: 100%;
+}
+
+.container-top {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 10;
+}
+.container-outlet {
+}
