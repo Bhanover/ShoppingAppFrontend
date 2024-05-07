@@ -1,0 +1,19 @@
+.clothes {
+  min-height: 1200px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+.clothes-container {
+  position: relative;
+}
+.clothes-back-button {
+  position: absolute;
+  left: 3%;
+  top: 10px;
+  cursor: pointer;
+}
+@media screen and (max-width: 480px) {
+  .clothes {
+    padding-top: 120px;
+  }
+}

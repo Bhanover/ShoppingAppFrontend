@@ -81,3 +81,8 @@
     animation: blink2 1s ease-in-out 1;
   }
 }
+.carruselCategoriesStore .swiper-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

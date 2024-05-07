@@ -1,36 +1,78 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Update import statement
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import axios from "axios";
 import "react-lazy-load-image-component/src/effects/opacity.css";
 import "./InfiniteStore.css";
-
-const InfiniteStore = () => {
+import LoaderPage from "../../loaders/LoaderPage";
+import Loader from "../../loaders/Loader";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [loadedItems, setLoadedItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const pageSize = 8;
+  const timeoutRef = useRef(null);
+  const navigate = useNavigate();
 
+  const subCategoryName = subCategoryNameWithId
+    ? subCategoryNameWithId.split("-")[0]
+    : null;
+  const subCategoryId = subCategoryNameWithId
+    ? subCategoryNameWithId.split("-")[1]
+    : null;
+  const categoryName = categoryNameWithId
+    ? categoryNameWithId.split("-")[0]
+    : null;
+  const categoryId = categoryNameWithId
+    ? categoryNameWithId.split("-")[1]
+    : null;
   useEffect(() => {
+    const baseUrl = "http://localhost:8081/api/";
+    let url = "";
+
+    if (categoryNameWithId === "novedades") {
+      url = `${baseUrl}products`;
+    } else if (subCategoryId) {
+      url = `${baseUrl}subcategories/${subCategoryId}/products`;
+    } else {
+      url = `${baseUrl}categories/${categoryId}/products`;
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      if (loading) {
+        setLoading(false);
+        setError("Tiempo de espera excedido. Intente recargar la página.");
+      }
+    }, 10000);
+
     axios
-      .get("http://localhost:8081/api/subcategories/1/products")
+      .get(url)
       .then((response) => {
+        clearTimeout(timeoutRef.current);
         const processedItems = response.data.map((item) => ({
           ...item,
           mainImage: item.mainImageUrl,
           hoverImage: item.secondaryImageUrl,
         }));
-
         setLoadedItems(processedItems);
         setItems(processedItems.slice(0, pageSize));
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setError("Error al cargar los datos.");
         setHasMore(false);
+        setLoading(false);
       });
-  }, []);
 
+    return () => clearTimeout(timeoutRef.current);
+  }, [categoryNameWithId, subCategoryNameWithId]);
   const fetchMoreData = () => {
     if (items.length >= loadedItems.length) {
       setHasMore(false);
@@ -39,24 +81,33 @@ const InfiniteStore = () => {
     const nextItems = loadedItems.slice(items.length, items.length + pageSize);
     setItems(items.concat(nextItems));
   };
+  if (loading) return <LoaderPage />;
+  if (error) return <p className="infiniteStore-error">{error}</p>;
 
   return (
     <div className="infiniteStore">
-      <h1>Mostrando </h1>
+      <h1>Mostrando {subCategoryId ? subCategoryName : categoryName}</h1>
       <InfiniteScroll
         dataLength={items.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={
+          <h4>
+            <Loader />
+          </h4>
+        }
         scrollThreshold={0.7}
       >
         <div className="infiniteStore-container">
-          {items.map((item, index) => (
-            <div key={index} className="infiniteStore-item-container">
-              <Link to="/" className="infiteStore-item-link">
+          {items.map((item) => (
+            <div key={item.id} className="infiniteStore-item-container">
+              <Link
+                to={`/home/store/${item.categoryName}-${item.categoryId}/${item.subCategoryName}-${item.subCategoryId}/${item.name}-${item.id}`}
+                className="infiniteStore-item-link"
+              >
                 <div className="infiniteStore-image-container">
                   <LazyLoadImage
-                    alt={`${item.name} - principal`}
+                    alt={`${item.name} - main`}
                     src={item.mainImage}
                     effect="opacity"
                     scrollPosition={0}
@@ -64,7 +115,7 @@ const InfiniteStore = () => {
                     className="infiniteStore-image-main"
                   />
                   <LazyLoadImage
-                    alt={`${item.name} - secundaria`}
+                    alt={`${item.name} - hover`}
                     src={item.hoverImage || item.mainImage}
                     effect="opacity"
                     scrollPosition={0}
@@ -86,92 +137,3 @@ const InfiniteStore = () => {
 };
 
 export default InfiniteStore;
-/*
-
-export default InfiniteStore;
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Link } from "react-router-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/opacity.css";
-import "./InfiniteStore.css";
-
-const InfiniteStore = ({ subCategoryId = 1 }) => {
-  const [allItems, setAllItems] = useState([]);
-  const [visibleItems, setVisibleItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
-  const itemsPerPage = 10; // Define cuántos productos quieres cargar por página
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8081/api/subcategories/${subCategoryId}/products`)
-      .then((response) => {
-        setAllItems(response.data);
-        setVisibleItems(response.data.slice(0, itemsPerPage));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, [subCategoryId]);
-
-  const fetchMoreData = () => {
-    if (visibleItems.length >= allItems.length) {
-      setHasMore(false);
-      return;
-    }
-    setTimeout(() => {
-      setVisibleItems(
-        visibleItems.concat(
-          allItems.slice(
-            visibleItems.length,
-            visibleItems.length + itemsPerPage
-          )
-        )
-      );
-    }, 1500);
-  };
-
-  return (
-    <div className="infiniteStore">
-      <h1>Mostrando Productos</h1>
-      <InfiniteScroll
-        dataLength={visibleItems.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<h4>Cargando...</h4>}
-        scrollThreshold={0.7}
-      >
-        <div className="infiniteStore-container">
-          {visibleItems.map((item, index) => (
-            <div key={index} className="infiniteStore-item-container">
-              <Link
-                to={`/product/${item.id}`}
-                className="infiteStore-item-link"
-              >
-                <div className="infiniteStore-image-container">
-                  <LazyLoadImage
-                    alt={item.name}
-                    src={
-                      item.images[0]?.imageUrl ||
-                      "https://via.placeholder.com/150"
-                    }
-                    effect="opacity"
-                    className="infiniteStore-image-main"
-                  />
-                </div>
-                <div className="infiniteStore-details-container">
-                  <p>{item.name}</p>
-                  <p>{item.price}</p>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      </InfiniteScroll>
-    </div>
-  );
-};
-
-export default InfiniteStore;
-*/

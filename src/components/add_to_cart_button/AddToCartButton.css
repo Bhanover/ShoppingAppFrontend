@@ -12,3 +12,6 @@
 .add-to-cart-button:hover {
   background-color: #659f1c;
 }
+.add-to-cart-button:disabled {
+  background-color: rgb(160, 165, 165);
+}

@@ -1,0 +1,14 @@
+.contact {
+  background-image: url("/public/images/contact.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.contact-container {
+  padding-top: 40px;
+}
+.contact-back-button {
+  color: white;
+  margin-left: 3%;
+  cursor: pointer;
+}

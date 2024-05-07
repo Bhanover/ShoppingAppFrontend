@@ -1,0 +1,16 @@
+.store {
+  background-color: #f3fffe;
+  min-height: 1200px;
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+
+.back-button {
+  position: absolute;
+  left: 3%;
+  top: 10px;
+  cursor: pointer;
+}
+.store-container {
+  position: relative;
+}

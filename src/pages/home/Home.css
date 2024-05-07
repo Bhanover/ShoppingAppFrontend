@@ -2,6 +2,7 @@
   width: 100%;
   height: 100vh;
   cursor: pointer;
+  background-color: #f3fffe;
 }
 .fullpage-wrapper {
   width: 100%;
@@ -19,31 +20,46 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("https://t3.ftcdn.net/jpg/05/35/47/38/360_F_535473874_OWCa2ohzXXNZgqnlzF9QETsnbrSO9pFS.jpg");
+  background-image: url(/public/images/novedades.webp);
   background-size: cover;
   background-position: center;
 }
 .home-image2 {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("https://t3.ftcdn.net/jpg/05/35/47/38/360_F_535473874_OWCa2ohzXXNZgqnlzF9QETsnbrSO9pFS.jpg");
+  background-image: url(/public/images/zapatos.webp);
   background-size: cover;
-  background-position: center;
+  background-position: top center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: #eeeeee; /* Fallback color en caso de que la imagen no cargue */
 }
+
 .home-image3 {
-  height: 100vh;
+  color: white;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("https://t3.ftcdn.net/jpg/05/35/47/38/360_F_535473874_OWCa2ohzXXNZgqnlzF9QETsnbrSO9pFS.jpg");
-  background-size: cover;
-  background-position: center;
+
+  /* Configura tres imágenes de fondo */
+  background-image: url("/public/images/vestido1.jpg"),
+    url("/public/images/vestido2.jpg"), url("/public/images/vestido3.jpg");
+
+  /* Asegura que cada imagen cubra el tercio del contenedor y no se repitan */
+  background-size: 33.33% 95%, 33.33% 95%, 33.33% 95%;
+
+  /* Alinea las imágenes en fila */
+  background-position: left, center, right;
+
+  /* Evita la repetición de las imágenes */
+  background-repeat: no-repeat, no-repeat, no-repeat;
 }
 
 .button-home {
@@ -56,18 +72,9 @@
   cursor: pointer;
 }
 .home-categories {
-  padding-top: 100px;
+  padding-top: 120px;
   height: 100vh;
   width: 100%;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(255, 255, 255, 0.5711076666994923) 0%,
-    rgba(202, 122, 217, 1) 100%,
-    rgba(204, 102, 223, 1) 100%,
-    rgba(215, 0, 255, 1) 100%
-  );
 }
 .home-newsletter {
   display: flex;
@@ -85,4 +92,19 @@
 }
 .home-bottomBar {
   padding-top: 148px;
+}
+@media (max-width: 860px) {
+  .home-image3 {
+    background-size: 50% 95%, 50% 95%;
+    background-position: left, right;
+    background-repeat: no-repeat, no-repeat;
+  }
+}
+/* Cuando la pantalla es de hasta 480px */
+@media (max-width: 480px) {
+  .home-image3 {
+    background-size: 100% 95%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 }

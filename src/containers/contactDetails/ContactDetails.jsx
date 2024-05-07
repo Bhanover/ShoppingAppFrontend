@@ -3,10 +3,10 @@ import React from "react";
 import "./ContactDetails.css";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ContactDetails = () => {
-  const navigate = useNavigate();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -41,9 +41,6 @@ const ContactDetails = () => {
 
   return (
     <div className="contactMain">
-      <button onClick={() => navigate(-1)} className="backButton">
-        atras
-      </button>
       <h1>Contáctanos</h1>
       <form className="contactMain-form" onSubmit={handleSubmit}>
         <input

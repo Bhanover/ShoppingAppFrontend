@@ -5,7 +5,7 @@
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid white;
-  background-color: rgba(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .contactMain h1 {
   text-align: center;

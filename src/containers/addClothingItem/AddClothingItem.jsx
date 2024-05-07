@@ -1,292 +1,3 @@
-/*import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./AddClothingItem.css";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import makeAnimated from "react-select/animated";
-import Select from "react-select";
-import CategoryService from "../../service/CategoryService";
-import SizeService from "../../service/SizeService";
-import ImageUploader from "../../components/ImageUploader";
-
-const AddClothingItem = () => {
-  const animatedComponents = makeAnimated();
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubCategories, setSelectedSubCategories] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [sizes, setSizes] = useState([]);
-  const [allSizes, setAllSizes] = useState([]);
-  const [clothingData, setClothingData] = useState({
-    name: "",
-    type: "",
-    price: "",
-    stock: "",
-    description: "",
-    categoryId: "",
-    subCategoryId: "",
-    images: [],
-    variants: [],
-  });
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const jwtToken = localStorage.getItem("JwtToken");
-
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const fetchedCategories = await CategoryService.fetchCategoriesName();
-        setCategories(
-          fetchedCategories.map((cat) => ({
-            value: cat.id,
-            label: cat.name,
-            subCategories: cat.subCategories.map((sub) => ({
-              value: sub.id,
-              label: sub.name,
-            })),
-          }))
-        );
-      } catch (error) {
-        console.error("Error al cargar categorías: ", error);
-      }
-    };
-
-    const fetchSizes = async () => {
-      const response = await SizeService.fetchAdminSizes();
-      setAllSizes(response);
-    };
-
-    loadCategories();
-    fetchSizes();
-  }, []);
-
-  const handleCategoryChange = (option) => {
-    setSelectedCategory(option);
-    setSelectedSubCategories([]);
-    if (option) {
-      setClothingData((prev) => ({ ...prev, categoryId: option.value }));
-    } else {
-      setClothingData((prev) => ({ ...prev, categoryId: "" }));
-    }
-  };
-
-  
-  const handleTypeChange = (selectedOption) => {
-    if (selectedOption) {
-      // Actualizar el tipo de prenda seleccionado en clothingData
-      setClothingData((prevState) => ({
-        ...prevState,
-        type: selectedOption.value,
-      }));
-
-      // Filtrar las tallas correspondientes al tipo de prenda seleccionado
-      const filteredSizes = allSizes
-        .filter((size) => size.sizeType === selectedOption.value)
-        .map((size) => ({
-          value: size.id,
-          label: size.label,
-        }));
-
-      // Actualizar las tallas disponibles
-      setSizes(filteredSizes);
-
-      // Limpiar las variantes al cambiar el tipo de prenda
-      setClothingData((prevState) => ({
-        ...prevState,
-        variants: [],
-      }));
-    } else {
-      // Si no se selecciona ninguna opción, limpiar el tipo de prenda y las tallas
-      setClothingData((prevState) => ({
-        ...prevState,
-        type: "",
-        variants: [],
-      }));
-      setSizes([]);
-    }
-  };
-
-  const handleClothingChange = (e) => {
-    const { name, value } = e.target;
-
-    // Manejar el cambio en el stock cuando se selecciona una talla
-    if (name.startsWith("stock_")) {
-      const sizeId = name.split("_")[1];
-      const updatedVariants = clothingData.variants.map((variant) => {
-        if (variant.sizeId === parseInt(sizeId)) {
-          return { ...variant, stock: parseInt(value) };
-        }
-        return variant;
-      });
-      setClothingData((prevState) => ({
-        ...prevState,
-        variants: updatedVariants,
-      }));
-    } else {
-      setClothingData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData();
-    Object.keys(clothingData).forEach((key) => {
-      if (key === "images") {
-        clothingData.images.forEach((image, index) => {
-          formData.append(`images[${index}].name`, image.name);
-          formData.append(`images[${index}].file`, image.file);
-        });
-      } else if (key === "variants") {
-        clothingData.variants.forEach((variant, index) => {
-          formData.append(`variants[${index}].sizeId`, variant.sizeId);
-          formData.append(`variants[${index}].stock`, variant.stock);
-        });
-      } else {
-        formData.append(key, clothingData[key]);
-      }
-    });
-
-    formData.append(
-      "categoryId",
-      selectedCategory ? selectedCategory.value : ""
-    );
-    selectedSubCategories.forEach((sub) => {
-      formData.append("subCategoryIds", sub.value);
-    });
-
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/product`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toast.success("Producto añadido con éxito");
-      navigate("/");
-    } catch (error) {
-      toast.error(
-        "Error al añadir producto: " +
-          (error.response?.data.error || error.message)
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleImageChange = (images) => {
-    setClothingData({ ...clothingData, images });
-  };
-
-  return (
-    <div className="addClothingItemMain">
-      <ToastContainer />
-      <h2>Gestión de Ropa</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="addClothingItemForm">
-          <div className="addClothingItemInfo">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={clothingData.name}
-              onChange={handleClothingChange}
-              placeholder="Nombre del producto"
-              required
-            />
-
-            <Select
-              components={animatedComponents}
-              options={categories}
-              onChange={handleCategoryChange}
-              value={selectedCategory}
-              placeholder="Seleccione la categoría"
-              isClearable
-            />
-            <Select
-              components={animatedComponents}
-              options={selectedCategory ? selectedCategory.subCategories : []}
-              onChange={(selectedOption) =>
-                setSelectedSubCategories(selectedOption ? [selectedOption] : [])
-              }
-              // ^^^ Modificación aquí ^^^
-              value={selectedSubCategories}
-              placeholder="Seleccione subcategorías"
-            />
-
-            <Select
-              components={animatedComponents}
-              options={[
-                { value: "CLOTHING", label: "Ropa" },
-                { value: "SHOES", label: "Zapatos" },
-              ]}
-              onChange={handleTypeChange}
-              placeholder="Seleccione el tipo de prenda"
-              isClearable
-              value={
-                clothingData.type
-                  ? { value: clothingData.type, label: clothingData.type }
-                  : null
-              }
-            />
-            <Select
-              components={animatedComponents}
-              options={sizes}
-              onChange={(selectedOption) =>
-                setClothingData({
-                  ...clothingData,
-                  sizeId: selectedOption.value,
-                })
-              }
-              // ^^^ Modificación aquí ^^^
-              value={clothingData.sizeId}
-              placeholder="Seleccione la talla"
-              isClearable
-            />
-            <input
-              type="number"
-              id="price"
-              name="price"
-              value={clothingData.price}
-              onChange={handleClothingChange}
-              min="0"
-              step="0.01"
-              required
-              placeholder="Precio"
-            />
-
-            <textarea
-              id="description"
-              name="description"
-              value={clothingData.description}
-              onChange={handleClothingChange}
-              placeholder="Descripción"
-            />
-          </div>
-
-          <div className="addClothingItemFile">
-            <ImageUploader onImageChange={handleImageChange} />
-          </div>
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? "Cargando..." : "Añadir producto"}
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default AddClothingItem;
-*/
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -364,22 +75,28 @@ const AddClothingItem = () => {
   };
 
   const handleCategoryChange = (selectedOption) => {
-    setFormData({ ...formData, categoryId: selectedOption.value });
-    const selectedCategory = categories.find(
-      (cat) => cat.id === selectedOption.value
-    );
-    setSubCategories(selectedCategory?.subCategories || []);
+    if (selectedOption) {
+      setFormData({ ...formData, categoryId: selectedOption.value });
+      const selectedCategory = categories.find(
+        (cat) => cat.id === selectedOption.value
+      );
+      setSubCategories(selectedCategory?.subCategories || []);
+    }
   };
 
   const handleSubCategoryChange = (selectedOption) => {
-    setFormData({ ...formData, subCategoryId: selectedOption.value });
+    if (selectedOption) {
+      setFormData({ ...formData, subCategoryId: selectedOption.value });
+    }
   };
 
   const handleSizeTypeChange = (selectedOption) => {
-    setSizeType(selectedOption.value);
-    filterSizes(selectedOption.value);
-    setSelectedSize("");
-    setSelectedStock(0);
+    if (selectedOption) {
+      setSizeType(selectedOption.value);
+      filterSizes(selectedOption.value);
+      setSelectedSize("");
+      setSelectedStock(0);
+    }
   };
 
   const filterSizes = (type) => {
@@ -389,16 +106,18 @@ const AddClothingItem = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (formData.images.length === 0) {
+      toast.error("Debe cargar al menos una imagen");
+      return;
+    }
     setLoading(true);
-    console.log("JSON enviado:", JSON.stringify(formData, null, 2));
-    console.log(formData);
+
     try {
       const response = await axios.post(BASE_URL + "/api/product", formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log("Respuesta del servidor:", response.data);
       toast.success("Producto agregado con éxito");
     } catch (error) {
       console.error(
@@ -479,7 +198,7 @@ const AddClothingItem = () => {
         ...formData,
         variants: [...formData.variants, newVariant],
       });
-      // Reset selected size and stock for the next entry
+
       setSelectedSize("");
       setSelectedStock(0);
     } else {
@@ -499,7 +218,7 @@ const AddClothingItem = () => {
 
   const handleSizeSelect = (selectedOption) => {
     setSelectedSize(selectedOption);
-    setSelectedStock(0); // Esto reseteará el stock cada vez que cambies el tamaño
+    setSelectedStock("");
   };
   return (
     <div className="addClothingItemMain">
@@ -510,46 +229,51 @@ const AddClothingItem = () => {
           <div className="addClothingItemInfo">
             <label>Nombre:</label>
             <input
+              required
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              placeholder="Ej. Camisa Vintage" // Ejemplo concreto
+              placeholder="Ej. Camisa Vintage"
             />
             <label>Tipo:</label>
             <input
+              required
               name="type"
               value={formData.type}
               onChange={handleInputChange}
-              placeholder="Ej. Camiseta, Pantalón" // Ejemplo de tipos de ropa
+              placeholder="Ej. Camiseta, Pantalón"
             />
             <label>Precio:</label>
             <input
+              required
               name="price"
               value={formData.price}
               onChange={handleInputChange}
               type="number"
-              placeholder="Ej. 19.99" // Ejemplo de formato de precio
+              placeholder="Ej. 19.99"
             />
             <label>Stock:</label>
             <input
+              required
               name="stock"
               value={formData.stock}
               onChange={handleInputChange}
               type="number"
-              placeholder="Cantidad disponible" // Instrucción clara
+              placeholder="Cantidad disponible"
             />
 
             <label>Descripción:</label>
             <textarea
+              required
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-              placeholder="Detalles del producto..." // Inicio de descripción sugerida
+              placeholder="Detalles del producto..."
             />
           </div>
           <div className="addClothingItemFile">
             <div className="file-info">
-              <FileBase64 multiple={true} onDone={getFiles} />
+              <FileBase64 required multiple={true} onDone={getFiles} />
               <button type="button" onClick={resetImages}>
                 Resetear Imágenes
               </button>
@@ -564,12 +288,15 @@ const AddClothingItem = () => {
                     </button>
                   </div>
                   <input
+                    required
                     type="number"
-                    placeholder="Orden" // Clarificación del propósito del campo
+                    placeholder="Orden"
                     value={img.orderIndex}
                     onChange={(e) => updateImageOrder(index, e.target.value)}
                   />
                   <Select
+                    required
+                    isClearable
                     classNamePrefix="custom-select-image-type"
                     options={imageTypeOptions}
                     value={imageTypeOptions.find(
@@ -584,6 +311,8 @@ const AddClothingItem = () => {
 
             <label>Categoría:</label>
             <Select
+              required
+              isClearable
               classNamePrefix="custom-select"
               components={animatedComponents}
               options={[
@@ -599,6 +328,8 @@ const AddClothingItem = () => {
             />
             <label>Subcategoría:</label>
             <Select
+              required
+              isClearable
               classNamePrefix="custom-select"
               components={animatedComponents}
               options={[
@@ -615,11 +346,13 @@ const AddClothingItem = () => {
             />
             <label>Tipo de Tamaño:</label>
             <Select
+              required
+              isClearable
               classNamePrefix="custom-select"
               components={animatedComponents}
               options={[
                 {
-                  value: "",
+                  value: null,
                   label: "Seleccione un tipo de tamaño...",
                   isDisabled: true,
                 },
@@ -630,6 +363,8 @@ const AddClothingItem = () => {
             />
             <label>Tamaño:</label>
             <Select
+              required
+              isClearable
               classNamePrefix="custom-select"
               components={animatedComponents}
               options={[
@@ -649,11 +384,12 @@ const AddClothingItem = () => {
 
             <div className="stock-size">
               <input
+                required
                 type="number"
                 value={selectedStock}
                 onChange={(e) => setSelectedStock(e.target.value)}
                 disabled={!selectedSize}
-                placeholder="Stock por tamaño" // Aclaración adicional
+                placeholder="Stock por tamaño"
               />
               <button
                 type="button"

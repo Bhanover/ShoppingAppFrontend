@@ -71,7 +71,6 @@
   flex-direction: column;
   height: 100vh;
   overflow-y: auto;
-  background-color: green;
 }
 .adminDashboardContent h1 {
   text-align: center;

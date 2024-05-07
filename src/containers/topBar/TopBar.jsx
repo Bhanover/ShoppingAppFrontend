@@ -8,21 +8,26 @@ import {
   faShoppingCart,
   faX,
   faHome,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import axios from "axios";
+import React, { useContext } from "react";
 
 import { CSSTransition } from "react-transition-group";
+import CartContext from "../../context/cartContext/CartContext";
+import Cart from "../cart/Cart";
 
 const TopBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isActive, setIsActive] = useState("Mujer");
   const menuRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
-
+  const { cartCount } = useContext(CartContext);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [categorias, setCategorias] = useState({ Mujer: [], Hombre: [] });
-
+  const cartRef = useRef(null);
   // Función para cargar las categorías desde el backend
   const fetchCategories = async () => {
     try {
@@ -42,6 +47,11 @@ const TopBar = () => {
   }, []);
   const menuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
+    if (!isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -77,8 +87,20 @@ const TopBar = () => {
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      document.body.style.overflow = "auto";
     };
   }, []);
+  const handleCartIconMouseEnter = () => {
+    setIsCartOpen(true);
+  };
+  const handleCartModalMouseEnter = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartModalMouseLeave = () => {
+    setIsCartOpen(false);
+  };
+
   return (
     <header className="topBar">
       <div className="topBar-promo">Envíos y devoluciones gratuitos</div>
@@ -122,9 +144,12 @@ const TopBar = () => {
                   <FontAwesomeIcon icon={faHome} />
                 </Link>
                 <Link
-                  to={`/${isActive}`}
+                  to="#" // Cambia el to por un hash "#" o elimina completamente la propiedad si lo prefieres
                   alt="Salir"
-                  onClick={() => menuOpen()}
+                  onClick={(e) => {
+                    e.preventDefault(); // Previene la navegación a otra página
+                    menuOpen(); // Cambia el estado para cerrar el menú
+                  }}
                 >
                   <FontAwesomeIcon icon={faX} />
                 </Link>
@@ -132,7 +157,10 @@ const TopBar = () => {
               <ul className="topBar-nav-menu-categories-names">
                 {categorias[isActive].map((categoria) => (
                   <li key={categoria.id}>
-                    <Link to={`/${categoria.name}`} alt={`/${categoria.name}`}>
+                    <Link
+                      to={`/home/store/${categoria.name}-${categoria.id}`}
+                      alt={`/${categoria.name}`}
+                    >
                       <img
                         src={categoria.categoryImage}
                         alt={`Imagen de ${categoria.nombre}`}
@@ -145,7 +173,12 @@ const TopBar = () => {
             </nav>
           </CSSTransition>
 
-          <div className="topBar-brand">Nombre</div>
+          <div className="topBar-brand">
+            <Link to="/home">
+              <img src="/images/logo.png" alt="Logo"></img>
+            </Link>
+          </div>
+
           <div className="topBar-icons">
             <form className="topBar-search">
               <input
@@ -158,12 +191,32 @@ const TopBar = () => {
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button>
             </form>
+            <Link to="/contact">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </Link>
             <Link to="/perfil">
               <FontAwesomeIcon icon={faUser} />
             </Link>
-            <Link to="/carrito">
+            <Link
+              to="/home/cart"
+              className="topbar-shopping-cart"
+              onMouseEnter={handleCartModalMouseEnter}
+              onMouseLeave={handleCartModalMouseLeave}
+            >
               <FontAwesomeIcon icon={faShoppingCart} />
+
+              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
             </Link>
+            {isCartOpen && (
+              <div
+                onMouseEnter={handleCartIconMouseEnter}
+                onMouseLeave={handleCartModalMouseLeave}
+                className="topbar-shopping-cart-modal"
+                ref={cartRef}
+              >
+                <Cart />
+              </div>
+            )}
           </div>
         </div>
 

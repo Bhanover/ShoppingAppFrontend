@@ -60,7 +60,7 @@ const CarruselCategories = () => {
           <SwiperSlide key={category.id} className="carruselCategories-item">
             <Link
               className="carruselCategories-item-in"
-              to={`/clothes-shop/category/${category.name}-${category.id}`}
+              to={`/home/store/${category.name}-${category.id}`}
             >
               <img
                 src={category.categoryImage || "default-image-url"} // Usar una imagen por defecto si no hay imagen

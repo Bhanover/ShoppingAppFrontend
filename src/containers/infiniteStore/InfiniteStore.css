@@ -17,7 +17,6 @@
 .infiniteStore-item-container {
   flex: 1 1 250px;
   max-width: calc(25% - 12px);
-  padding: 5px;
 }
 
 .infiniteStore-image-container {
@@ -62,6 +61,13 @@
 
 .infiniteStore-item-container:hover .infiniteStore-image-hover {
   opacity: 1;
+}
+
+.infiniteStore-error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 860px) {
