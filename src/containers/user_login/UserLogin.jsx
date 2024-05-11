@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import "./AdminLogin.css";
+import { Link, useNavigate } from "react-router-dom";
+import "./UserLogin.css";
+import BASE_URL from "../../Enviroment";
 
-const AdminLogin = () => {
+const UserLogin = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
@@ -15,14 +16,13 @@ const AdminLogin = () => {
     e.preventDefault();
 
     axios
-      .post(`ss/api/auth/signin`, formData)
+      .post(BASE_URL + `/api/session`, formData)
       .then((response) => {
-        localStorage.setItem("JwtToken", response.data.jwt);
+        localStorage.setItem("jwtToken", response.data.jwtToken);
+        console.log(response.data);
         const isAdmin = response.data.roles.includes("ROLE_ADMIN");
         localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
-        isAdmin
-          ? navigate("/admin-dashboard/category-management")
-          : navigate("/");
+        isAdmin ? navigate("/admin-dashboard/management") : navigate("/");
       })
       .catch((error) => {
         console.error("Error de autenticación:", error);
@@ -30,12 +30,15 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="adminMain">
-      <img src="/static/logo_page/logo.svg" alt="logo" />
-      <div className="admin-login-form">
+    <div className="loginMain">
+      <Link to="/">
+        <img src="/public/images/logo.png" alt="logo" />
+      </Link>
+
+      <div className="login-form">
         <h1>Admin Login</h1>
         <form onSubmit={onSubmit}>
-          <div className="admin-login-form-group">
+          <div className="login-form-group">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
@@ -45,7 +48,7 @@ const AdminLogin = () => {
               onChange={onChange}
             />
           </div>
-          <div className="admin-login-form-group">
+          <div className="login-form-group">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -60,9 +63,10 @@ const AdminLogin = () => {
             Login
           </button>
         </form>
+        <Link to="/register">Registrarse</Link>
       </div>
     </div>
   );
 };
 
-export default AdminLogin;
+export default UserLogin;

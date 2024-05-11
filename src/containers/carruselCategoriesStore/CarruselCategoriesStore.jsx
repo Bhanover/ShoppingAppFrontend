@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./CarruselCategoriesStore.css";
+import BASE_URL from "../../Enviroment";
 
 const CarruselCategoriesStore = ({ categoryNameWithId }) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -24,7 +25,7 @@ const CarruselCategoriesStore = ({ categoryNameWithId }) => {
     if (categoryId) {
       setLoading(true);
       axios
-        .get(`http://localhost:8081/api/categories/${categoryId}/subcategories`)
+        .get(BASE_URL + `/api/categories/${categoryId}/subcategories`)
         .then((response) => {
           setSubCategories(response.data);
           setLoading(false);
@@ -70,8 +71,8 @@ const CarruselCategoriesStore = ({ categoryNameWithId }) => {
             <Link
               to={
                 subCategory.id === 0
-                  ? `/home/store/${categoryName}-${categoryId}`
-                  : `/home/store/${categoryName}-${categoryId}/${subCategory.name}-${subCategory.id}`
+                  ? `/store/${categoryName}-${categoryId}`
+                  : `/store/${categoryName}-${categoryId}/${subCategory.name}-${subCategory.id}`
               }
               className="carruselCategoriesStore-item-in"
             >

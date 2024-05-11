@@ -13,6 +13,7 @@ import ImageMagnifier from "./ImageMagnifier";
 import AddToCartButton from "../../components/add_to_cart_button/AddToCartButton";
 import { useNavigate, useParams } from "react-router-dom";
 import LoaderPage from "../../loaders/LoaderPage";
+import BASE_URL from "../../Enviroment";
 
 const ClothesDetails = () => {
   const { productNameWithId } = useParams();
@@ -27,7 +28,7 @@ const ClothesDetails = () => {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8081/api/products/${productId}`
+          BASE_URL + `/api/products/${productId}`
         );
         setItem(response.data);
       } catch (error) {
@@ -62,7 +63,6 @@ const ClothesDetails = () => {
       <div className="clothesDetails-image-container">
         <Swiper
           onSwiper={setThumbsSwiper}
-          loop={true}
           spaceBetween={10}
           slidesPerView={5}
           freeMode={true}

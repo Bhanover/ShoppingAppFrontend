@@ -1,4 +1,4 @@
-.adminMain {
+.loginMain {
   display: flex;
   align-items: center;
   width: 100%;
@@ -12,11 +12,11 @@
   );
   flex-direction: column;
 }
-.adminMain img {
+.loginMain img {
   width: 200px;
   height: 200px;
 }
-.admin-login-form {
+.login-form {
   width: 400px;
   padding: 20px;
   border-radius: 8px;
@@ -24,27 +24,28 @@
   box-shadow: 2px 4px 5px rgba(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.5);
 }
-.admin-login-form h1 {
+.login-form h1 {
   text-align: center;
   font-size: 20px;
 }
-.admin-login-form form {
+.login-form form {
   display: flex;
   flex-direction: column;
 }
 
-.admin-login-form-group {
+.login-form-group {
   margin-bottom: 20px;
 }
 
-.admin-login-form-group label {
+.login-form-group label {
   display: block;
   margin-bottom: 5px;
   font-size: 16px;
+  color: black;
 }
 
-.admin-login-form-group input[type="text"],
-.admin-login-form-group input[type="password"] {
+.login-form-group input[type="text"],
+.login-form-group input[type="password"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -52,7 +53,7 @@
   font-size: 14px;
 }
 
-.adminMain button {
+.loginMain button {
   padding: 10px 15px;
   border: none;
   border-radius: 4px;

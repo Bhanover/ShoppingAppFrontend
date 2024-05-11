@@ -1,0 +1,105 @@
+.whatsapp-button {
+  background-color: rgb(76, 216, 0);
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.whatsappMain {
+  display: flex;
+  justify-content: center;
+}
+
+.whatsapp-button svg {
+  font-size: 26px;
+}
+
+.whatsapp-button:hover {
+  background-color: #0fc260;
+}
+
+/* Estilos para el fondo oscuro del modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Estilos para el modal */
+.whatsapp-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.whatsapp-modal-header {
+  text-align: center;
+  justify-content: center;
+}
+
+.whatsapp-modal-header h2 {
+  font-size: 20px;
+  font-weight: bolder;
+  color: rgb(231, 6, 227);
+}
+
+.whatsapp-modal p {
+  color: black;
+  font-size: 12px;
+}
+.whatsapp-modal button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.whatsapp-modal-close {
+  position: absolute;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  top: 0;
+  right: 0;
+}
+
+.whatsapp-modal-close:hover {
+  color: #666;
+}
+
+/* Ajustar el estilo de QRCode */
+.whatsapp-modal canvas {
+  margin: 10px 0;
+}
+.whatsapp-open {
+  background-color: #25d366;
+  color: white;
+}
+
+.whatsapp-open:hover {
+  background-color: #1c9b55;
+}

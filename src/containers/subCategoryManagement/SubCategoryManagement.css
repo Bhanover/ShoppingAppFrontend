@@ -1,4 +1,4 @@
-.categoryManagement {
+.subCategoryManagement {
   border-radius: 8px;
   font-family: "Arial", sans-serif;
   width: 100%;
@@ -7,22 +7,22 @@
   padding: 20px;
 }
 
-.categoryManagement-title {
+.subCategoryManagement-title {
   text-align: center;
   color: #333;
   margin-bottom: 20px;
   font-size: 25px;
 }
-.categoryManagement-iconLabel {
+.subCategoryManagement-iconLabel {
   color: black;
 }
-.categoryManagement-iconLabel img {
+.subCategoryManagement-iconLabel img {
   width: 40px;
   height: 40px;
   border-radius: 5px;
   border: 1px solid black;
 }
-.categoryManagement-container {
+.subCategoryManagement-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -31,8 +31,8 @@
   margin-bottom: 30px;
 }
 
-.categoryManagement-inputField,
-.categoryManagement-inputFile,
+.subCategoryManagement-inputField,
+.subCategoryManagement-inputFile,
 .categoryManagement-button {
   flex: 1;
   min-width: 120px;
@@ -43,12 +43,11 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.categoryManagement-iconLabel:hover {
+.subCategoryManagement-iconLabel:hover {
   transform: translateY(-2px) scale(1.05);
   cursor: pointer;
 }
-.categoryManagement-button {
-  position: relative;
+.subCategoryManagement-button {
   background-color: #007bff;
   color: white;
   padding: 8px 15px;
@@ -61,61 +60,105 @@
   align-items: center;
   min-width: 120px;
   min-height: 40px;
+  position: relative;
 }
-.categoryManagement-button:disabled {
+.subCategoryManagement-button:disabled {
   background-color: #4e4e4e;
   cursor: not-allowed;
 }
-.categoryManagement-button:hover {
+.subCategoryManagement-button:hover {
   background-color: #0056b3;
 }
 
-.categoryManagement-button .delete {
+.subCategoryManagement-button .delete {
   background-color: #dc3545;
 }
 
-.categoryManagement-button .delete:hover {
+.subCategoryManagement-button .delete:hover {
   background-color: #c82333;
 }
-.table-wrapper {
+.subtable-wrapper {
   height: 440px;
-  overflow-x: auto; /* Permite el desplazamiento horizontal sólo si es necesario */
-  max-width: 100%; /* Contenedor ajustable al ancho del viewport o su contenedor */
-  border: 2px solid black;
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid rgb(210, 207, 207);
+  position: relative;
+}
+.subcategoryManagement-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 50;
 }
 
-.categoryManagement-table {
-  width: auto; /* Permite que la tabla se ajuste al ancho del contenedor */
-  width: 100%; /* Asegura que la tabla no sobrepase el ancho del contenedor */
-  border-collapse: collapse; /* Espacio entre los bordes de las celdas eliminado */
+.subcategoryManagement-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  background: #f8f7f7;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
 }
-
-.categoryManagement-table th,
-.categoryManagement-table td {
-  border: 1px solid #555555; /* Borde más suave */
-  padding: 9.5px; /* Espacio interno */
-  text-align: center; /* Texto centrado */
+.subcategoryManagement-modal button {
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid black;
 }
-
-.categoryManagement-table tbody {
-  overflow-y: auto; /* Desplazamiento vertical si es necesario */
-  max-height: 400px; /* Altura máxima antes de desplazar */
+.subcategoryManagement-modal button:hover {
+  background-color: #474646;
+  color: white;
 }
-
-.categoryManagement-table thead,
-.categoryManagement-table tbody tr {
+.subCategoryManagement-table {
+  width: auto;
   width: 100%;
-  table-layout: fixed; /* Anchura de columna fija */
+  border-collapse: collapse;
+}
+.subCategoryManagement-table-subcategories {
+  text-align: left !important;
+  list-style-type: square;
+  color: #474646;
+}
+.subCategoryManagement-table th,
+.subCategoryManagement-table td {
+  border: 1px solid #c6c4c4;
+  padding: 5px;
+  text-align: center;
 }
 
-.categoryManagement-table img {
-  width: 100px; /* Ancho fijo para las imágenes */
-  height: auto; /* Altura automática para mantener la proporción */
+.subCategoryManagement-table tbody {
+  overflow-y: auto;
+  max-height: 400px;
 }
-.categoryManagement-table tbody td {
+
+.subCategoryManagement-table thead,
+.subCategoryManagement-table tbody tr {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.subCategoryManagement-table img {
+  width: 100px;
+  height: 100px;
+}
+.subCategoryManagement-table tbody td {
   height: 20px;
 }
-.categoryManagement-table-actions div {
+.subCategoryManagement-table-actions div {
   width: 100%;
   height: 100%;
   display: flex;
@@ -123,13 +166,13 @@
   justify-content: center;
   gap: 10px;
 }
-.categoryManagement-table-actions div button {
+.subCategoryManagement-table-actions div button {
   padding: 2px;
   border-radius: 3px;
   border: 1px solid rgb(205, 205, 205);
   background-color: transparent;
 }
-.categoryManagement-table-actions div button:hover {
+.subCategoryManagement-table-actions div button:hover {
   background-color: rgb(203, 202, 202);
   color: white;
   cursor: pointer;

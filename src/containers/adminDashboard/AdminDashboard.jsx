@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
+import Logout from "../../components/logout/Logout";
 //Componente encargado de gestionar el panel de administración
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -63,7 +65,13 @@ const AdminDashboard = () => {
             to="/admin-dashboard/clothing-management"
             className="sidebarLink"
           >
-            Gestión de Ropa
+            Agregar un producto
+          </Link>
+          <Link
+            to="/admin-dashboard/delete-clothing-management"
+            className="sidebarLink"
+          >
+            Eliminar un producto
           </Link>
           <Link
             to="/admin-dashboard/category-management"
@@ -79,7 +87,16 @@ const AdminDashboard = () => {
           </Link>
         </div>
         <div className="adminDashboardContent">
-          <h1>Admin Management</h1>
+          <div className="adminDashboardContent-topBar">
+            <div className="left"></div>
+            <h1>Admin Management</h1>
+            <div className="right">
+              <Link to="/">
+                <FontAwesomeIcon icon={faGlobe} />
+              </Link>
+              <Logout />
+            </div>
+          </div>
           <Outlet />
         </div>
       </div>

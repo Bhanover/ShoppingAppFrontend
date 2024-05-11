@@ -18,14 +18,16 @@ const AddToCartButton = ({ product, selectedSize }) => {
   };
 
   return (
-    <button
-      className="add-to-cart-button"
-      onClick={handleClick}
-      disabled={!selectedSize}
-    >
+    <div>
       <ToastContainer />
-      AÑADIR A MI CESTA
-    </button>
+      <button
+        className="add-to-cart-button"
+        onClick={handleClick}
+        disabled={!selectedSize}
+      >
+        AÑADIR A MI CESTA
+      </button>
+    </div>
   );
 };
 

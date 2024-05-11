@@ -18,30 +18,28 @@ import React, { useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 import CartContext from "../../context/cartContext/CartContext";
 import Cart from "../cart/Cart";
+import BASE_URL from "../../Enviroment";
+import ProfileMenu from "../../components/profile_menu/ProfileMenu";
+import CartMenu from "../../components/cart_menu/CartMenu";
 
 const TopBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isActive, setIsActive] = useState("Mujer");
   const menuRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
-  const { cartCount } = useContext(CartContext);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [categorias, setCategorias] = useState({ Mujer: [], Hombre: [] });
-  const cartRef = useRef(null);
-  // Función para cargar las categorías desde el backend
+
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/simple-categories"
+        BASE_URL + "/api/simple-categories-home"
       );
-      // Suponiendo que response.data es un array de categorías
       setCategorias({ Mujer: response.data, Hombre: response.data });
     } catch (error) {
       console.error("Error al cargar las categorías:", error);
     }
   };
 
-  // Cargar categorías al montar el componente
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -65,7 +63,6 @@ const TopBar = () => {
 
     const handleWheel = (event) => {
       if (event.deltaY > 0) {
-        // Scroll hacia abajo, oculta el buscador y el nombre
         searchBar.style.transform = "translateY(-100px)";
         searchBar_2.style.transform = "translateY(-200px)";
         brandName.style.transform = "translateY(-100px)";
@@ -73,7 +70,6 @@ const TopBar = () => {
         searchBar_2.style.opacity = "0.5";
         brandName.style.opacity = "0.5";
       } else {
-        // Scroll hacia arriba, muestra el buscador y el nombre
         searchBar.style.transform = "translateY(0)";
         searchBar_2.style.transform = "translateY(0)";
         brandName.style.transform = "translateY(0)";
@@ -90,16 +86,6 @@ const TopBar = () => {
       document.body.style.overflow = "auto";
     };
   }, []);
-  const handleCartIconMouseEnter = () => {
-    setIsCartOpen(true);
-  };
-  const handleCartModalMouseEnter = () => {
-    setIsCartOpen(true);
-  };
-
-  const handleCartModalMouseLeave = () => {
-    setIsCartOpen(false);
-  };
 
   return (
     <header className="topBar">
@@ -137,18 +123,18 @@ const TopBar = () => {
                   </li>
                 </ul>
                 <Link
-                  to="/home"
+                  to="/"
                   alt="Volver a la página principal"
                   onClick={() => menuOpen()}
                 >
                   <FontAwesomeIcon icon={faHome} />
                 </Link>
                 <Link
-                  to="#" // Cambia el to por un hash "#" o elimina completamente la propiedad si lo prefieres
+                  to="#"
                   alt="Salir"
                   onClick={(e) => {
-                    e.preventDefault(); // Previene la navegación a otra página
-                    menuOpen(); // Cambia el estado para cerrar el menú
+                    e.preventDefault();
+                    menuOpen();
                   }}
                 >
                   <FontAwesomeIcon icon={faX} />
@@ -158,7 +144,7 @@ const TopBar = () => {
                 {categorias[isActive].map((categoria) => (
                   <li key={categoria.id}>
                     <Link
-                      to={`/home/store/${categoria.name}-${categoria.id}`}
+                      to={`/store/${categoria.name}-${categoria.id}`}
                       alt={`/${categoria.name}`}
                     >
                       <img
@@ -174,7 +160,7 @@ const TopBar = () => {
           </CSSTransition>
 
           <div className="topBar-brand">
-            <Link to="/home">
+            <Link to="/">
               <img src="/images/logo.png" alt="Logo"></img>
             </Link>
           </div>
@@ -191,32 +177,11 @@ const TopBar = () => {
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button>
             </form>
-            <Link to="/contact">
+            <Link to="/contact" title="contacto">
               <FontAwesomeIcon icon={faEnvelope} />
             </Link>
-            <Link to="/perfil">
-              <FontAwesomeIcon icon={faUser} />
-            </Link>
-            <Link
-              to="/home/cart"
-              className="topbar-shopping-cart"
-              onMouseEnter={handleCartModalMouseEnter}
-              onMouseLeave={handleCartModalMouseLeave}
-            >
-              <FontAwesomeIcon icon={faShoppingCart} />
-
-              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-            </Link>
-            {isCartOpen && (
-              <div
-                onMouseEnter={handleCartIconMouseEnter}
-                onMouseLeave={handleCartModalMouseLeave}
-                className="topbar-shopping-cart-modal"
-                ref={cartRef}
-              >
-                <Cart />
-              </div>
-            )}
+            <ProfileMenu />
+            <CartMenu />
           </div>
         </div>
 

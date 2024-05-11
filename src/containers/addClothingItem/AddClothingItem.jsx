@@ -11,6 +11,9 @@ import BASE_URL from "../../Enviroment";
 import FileBase64 from "react-file-base64";
 import Loader from "../../loaders/Loader";
 import "./AddClothingItem.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDeleteLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import ClothesService from "../../service/ClothesService";
 const AddClothingItem = () => {
   const navigate = useNavigate();
   const animatedComponents = makeAnimated();
@@ -36,6 +39,8 @@ const AddClothingItem = () => {
   const [selectedStock, setSelectedStock] = useState("");
   const resetImages = () => {
     setFormData({ ...formData, images: [] });
+    const inputs = document.querySelectorAll('input[type="file"]');
+    inputs.forEach((input) => (input.value = ""));
   };
 
   const removeImage = (index) => {
@@ -59,7 +64,7 @@ const AddClothingItem = () => {
       try {
         const fetchedSizes = await SizeService.fetchAdminSizes();
         setSizes(fetchedSizes);
-        filterSizes(sizeType); // Filtra inicialmente por ropa
+        filterSizes(sizeType);
       } catch (error) {
         console.error("Error al obtener los tamaños", error);
         toast.error("Error al cargar los tamaños");
@@ -80,6 +85,7 @@ const AddClothingItem = () => {
       const selectedCategory = categories.find(
         (cat) => cat.id === selectedOption.value
       );
+
       setSubCategories(selectedCategory?.subCategories || []);
     }
   };
@@ -113,26 +119,32 @@ const AddClothingItem = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(BASE_URL + "/api/product", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await ClothesService.addClothingItem(formData);
       toast.success("Producto agregado con éxito");
+      setFormData({
+        name: "",
+        type: "",
+        price: "",
+        stock: "",
+        description: "",
+        categoryId: "",
+        subCategoryId: "",
+        images: [],
+        variants: [],
+      });
+      setSelectedSize(null);
+      setSelectedStock("");
+      const inputs = document.querySelectorAll('input[type="file"]');
+      inputs.forEach((input) => (input.value = ""));
     } catch (error) {
-      console.error(
-        "Error al agregar el producto",
-        error.response ? error.response.data : error
-      );
+      console.error("Error al agregar el producto", error);
       toast.error(
-        "Error al agregar el producto: " +
-          (error.response ? error.response.data.error : error.message)
+        "Error al agregar el producto: " + (error.message || "Unknown error")
       );
     } finally {
       setLoading(false);
     }
   };
-
   const categoryOptions = categories.map((cat) => ({
     value: cat.id,
     label: cat.name,
@@ -188,23 +200,38 @@ const AddClothingItem = () => {
   };
 
   const addVariant = () => {
-    if (selectedSize) {
-      const newVariant = {
-        sizeId: selectedSize.value,
-        label: selectedSize.label,
-        stock: selectedStock,
-      };
-      setFormData({
-        ...formData,
-        variants: [...formData.variants, newVariant],
-      });
-
-      setSelectedSize("");
-      setSelectedStock(0);
-    } else {
-      toast.error("Please select a size before adding");
+    if (!selectedSize) {
+      toast.error("Por favor, seleccione un tamaño antes de agregar.");
+      return;
     }
+
+    if (selectedStock <= 0) {
+      toast.error("El stock debe ser mayor que 0.");
+      return;
+    }
+
+    const sizeAlreadyAdded = formData.variants.some(
+      (variant) => variant.sizeId === selectedSize.value
+    );
+    if (sizeAlreadyAdded) {
+      toast.error("Este tamaño ya ha sido agregado.");
+      return;
+    }
+
+    const newVariant = {
+      sizeId: selectedSize.value,
+      label: selectedSize.label,
+      stock: selectedStock,
+    };
+    setFormData({
+      ...formData,
+      variants: [...formData.variants, newVariant],
+    });
+
+    setSelectedSize(null);
+    setSelectedStock(0);
   };
+
   const updateImageType = (index, newType) => {
     const updatedImages = formData.images.map((img, i) => {
       if (i === index) {
@@ -251,6 +278,8 @@ const AddClothingItem = () => {
               onChange={handleInputChange}
               type="number"
               placeholder="Ej. 19.99"
+              min="0"
+              step="0.01"
             />
             <label>Stock:</label>
             <input
@@ -260,6 +289,7 @@ const AddClothingItem = () => {
               onChange={handleInputChange}
               type="number"
               placeholder="Cantidad disponible"
+              min="0"
             />
 
             <label>Descripción:</label>
@@ -290,6 +320,7 @@ const AddClothingItem = () => {
                   <input
                     required
                     type="number"
+                    min="1"
                     placeholder="Orden"
                     value={img.orderIndex}
                     onChange={(e) => updateImageOrder(index, e.target.value)}
@@ -363,7 +394,6 @@ const AddClothingItem = () => {
             />
             <label>Tamaño:</label>
             <Select
-              required
               isClearable
               classNamePrefix="custom-select"
               components={animatedComponents}
@@ -384,8 +414,8 @@ const AddClothingItem = () => {
 
             <div className="stock-size">
               <input
-                required
                 type="number"
+                min="0"
                 value={selectedStock}
                 onChange={(e) => setSelectedStock(e.target.value)}
                 disabled={!selectedSize}
@@ -396,27 +426,33 @@ const AddClothingItem = () => {
                 onClick={addVariant}
                 disabled={!selectedSize}
               >
-                Add
+                Agregar
               </button>
             </div>
             <div className="detail-stock-size">
               {formData.variants.map((variant) => (
-                <div key={variant.sizeId}>
+                <div
+                  key={variant.sizeId}
+                  className="detail-stock-size-container"
+                >
                   <span>
-                    {variant.label}: {variant.stock}
+                    Tamaño : {variant.label} - Stock por Tamaño: {variant.stock}
                   </span>
-                  <button
-                    type="button"
+
+                  <FontAwesomeIcon
                     onClick={() => removeVariant(variant.sizeId)}
-                  >
-                    Remove
-                  </button>
+                    icon={faTrash}
+                  />
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <button type="submit" disabled={loading}>
+        <button
+          type="submit"
+          disabled={loading}
+          className="addClothingItem-add-product-button"
+        >
           {loading ? <Loader /> : "Añadir producto"}
         </button>
       </form>

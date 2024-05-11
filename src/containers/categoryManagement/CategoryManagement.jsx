@@ -8,33 +8,31 @@ import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../loaders/Loader";
 import CategoryService from "../../service/CategoryService";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import ReactModal from "react-modal";
 
 const CategoryManagement = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState({ name: "", description: "" });
   const [categoryImage, setCategoryImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingCategories, setLoadingCategories] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   // Cargar las categorías cuando el componente se monta
   useEffect(() => {
     loadCategories();
   }, [currentPage]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [deleteCandidateId, setDeleteCandidateId] = useState(null);
 
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
   const loadCategories = async () => {
+    setLoadingCategories(true);
     try {
       const res = await CategoryService.fetchAdminCategories();
       setCategories(res);
     } catch (error) {
       toast.error("Error cargando las categorías");
+    } finally {
+      setLoadingCategories(false);
     }
   };
 
@@ -89,19 +87,44 @@ const CategoryManagement = () => {
     }
   };
 
-  const handleDeleteCategory = async (id) => {
-    try {
-      await CategoryService.deleteCategory(id);
-      loadCategories();
-      toast.success("Categoría eliminada con éxito.");
-    } catch (error) {
-      toast.error("Error al eliminar la categoría.");
+  const requestDelete = (id) => {
+    setModalIsOpen(true);
+    setDeleteCandidateId(id);
+  };
+  const handleDeleteCategory = async () => {
+    if (deleteCandidateId) {
+      try {
+        await CategoryService.deleteCategory(deleteCandidateId);
+        loadCategories();
+        toast.success("Categoría eliminada con éxito.");
+      } catch (error) {
+        toast.error("Error al eliminar la categoría.");
+      }
     }
+    closeAndResetModal();
   };
 
+  const closeAndResetModal = () => {
+    setModalIsOpen(false);
+    setDeleteCandidateId(null);
+  };
   return (
     <div className="categoryManagement">
       <ToastContainer />
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeAndResetModal}
+        contentLabel="Confirmación de Eliminación"
+        className="subcategoryManagement-modal"
+        overlayClassName="subcategoryManagement-modal-overlay"
+      >
+        <h2>Confirmación</h2>
+        <p>¿Estás seguro de que deseas eliminar esta subcategoría?</p>
+        <div>
+          <button onClick={handleDeleteCategory}>Eliminar</button>
+          <button onClick={closeAndResetModal}>Cancelar</button>
+        </div>
+      </ReactModal>
       <h2 className="categoryManagement-title">Gestión de Categorías</h2>
       <div className="categoryManagement-container">
         <input
@@ -141,64 +164,63 @@ const CategoryManagement = () => {
         <button
           className="categoryManagement-button"
           onClick={handleAddCategory}
-          disabled={loading} // Deshabilita el botón mientras se carga
+          disabled={loading}
         >
           {loading ? <Loader /> : "Añadir Categoría"}
         </button>
       </div>
       <div className="table-wrapper">
-        <table className="categoryManagement-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Imagen</th>
-              <th>Acciones</th>
-              <th className="categoryManagement-table-actions">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((category) => (
-              <React.Fragment key={category.id}>
-                <tr>
-                  <td>{category.name}</td>
-                  <td>{category.description}</td>
-                  <td>
-                    <img src={category.categoryImage} alt={category.name} />
-                  </td>
-                  <td>
-                    {category.subCategories.map((subCategory) => (
-                      <p key={subCategory.id}>{subCategory.name}</p>
-                    ))}
-                  </td>
-                  <td className="categoryManagement-table-actions">
-                    <div>
-                      <button onClick={() => handleUpdateCategory(category.id)}>
-                        <FaEdit />
-                        Editar
-                      </button>
-                      <button onClick={() => handleDeleteCategory(category.id)}>
-                        <FaTrashAlt />
-                        Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="pagination-controls">
-        <button onClick={handlePreviousPage} disabled={currentPage === 0}>
-          Anterior
-        </button>
-        <span>Página {currentPage + 1}</span>
-        <button onClick={handleNextPage}>Siguiente</button>
+        {loadingCategories ? (
+          <Loader />
+        ) : (
+          <table className="categoryManagement-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Imagen</th>
+                <th>Sub-Categorias</th>
+                <th className="categoryManagement-table-actions">Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {categories.map((category) => (
+                <React.Fragment key={category.id}>
+                  <tr>
+                    <td>{category.name}</td>
+                    <td>{category.description}</td>
+                    <td>
+                      <img src={category.categoryImage} alt={category.name} />
+                    </td>
+                    <td className="categoryManagement-table-subcategories">
+                      {category.subCategories.map((subCategory) => (
+                        <li key={subCategory.id}>{subCategory.name}</li>
+                      ))}
+                    </td>
+                    <td className="categoryManagement-table-actions">
+                      <div>
+                        <button
+                          onClick={() => handleUpdateCategory(category.id)}
+                        >
+                          <FaEdit />
+                          Editar
+                        </button>
+                        <button onClick={() => requestDelete(category.id)}>
+                          <FaTrashAlt />
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
 
 export default CategoryManagement;
-/*     */

@@ -13,3 +13,9 @@
 }
 .container-outlet {
 }
+.container-whatsAppButton {
+  position: fixed;
+  z-index: 5;
+  right: 20px;
+  bottom: 20px;
+}

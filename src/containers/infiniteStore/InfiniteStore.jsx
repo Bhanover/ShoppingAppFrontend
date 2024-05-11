@@ -10,6 +10,8 @@ import Loader from "../../loaders/Loader";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import LoaderInfinite from "../../loaders/LoaderInfinite";
+import BASE_URL from "../../Enviroment";
 const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
   const [items, setItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -33,15 +35,14 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
     ? categoryNameWithId.split("-")[1]
     : null;
   useEffect(() => {
-    const baseUrl = "http://localhost:8081/api/";
     let url = "";
 
     if (categoryNameWithId === "novedades") {
-      url = `${baseUrl}products`;
+      url = `${BASE_URL}/api/products`;
     } else if (subCategoryId) {
-      url = `${baseUrl}subcategories/${subCategoryId}/products`;
+      url = `${BASE_URL}/api/subcategories/${subCategoryId}/products`;
     } else {
-      url = `${baseUrl}categories/${categoryId}/products`;
+      url = `${BASE_URL}/api/categories/${categoryId}/products`;
     }
 
     timeoutRef.current = setTimeout(() => {
@@ -63,6 +64,7 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
         setLoadedItems(processedItems);
         setItems(processedItems.slice(0, pageSize));
         setLoading(false);
+        setHasMore(processedItems.length > pageSize);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -78,9 +80,15 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
       setHasMore(false);
       return;
     }
-    const nextItems = loadedItems.slice(items.length, items.length + pageSize);
+    const nextIndex = items.length;
+    const nextItems = loadedItems.slice(nextIndex, nextIndex + pageSize);
     setItems(items.concat(nextItems));
+
+    if (nextIndex + pageSize >= loadedItems.length) {
+      setHasMore(false);
+    }
   };
+
   if (loading) return <LoaderPage />;
   if (error) return <p className="infiniteStore-error">{error}</p>;
 
@@ -91,18 +99,14 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
         dataLength={items.length}
         next={fetchMoreData}
         hasMore={hasMore}
-        loader={
-          <h4>
-            <Loader />
-          </h4>
-        }
+        loader={<LoaderInfinite />}
         scrollThreshold={0.7}
       >
         <div className="infiniteStore-container">
           {items.map((item) => (
             <div key={item.id} className="infiniteStore-item-container">
               <Link
-                to={`/home/store/${item.categoryName}-${item.categoryId}/${item.subCategoryName}-${item.subCategoryId}/${item.name}-${item.id}`}
+                to={`/store/${item.categoryName}-${item.categoryId}/${item.subCategoryName}-${item.subCategoryId}/${item.name}-${item.id}`}
                 className="infiniteStore-item-link"
               >
                 <div className="infiniteStore-image-container">

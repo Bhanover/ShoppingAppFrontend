@@ -1,0 +1,108 @@
+.cartMenu-modal {
+  position: absolute;
+  z-index: 3;
+  right: 4%;
+  top: 70px;
+  width: 350px;
+  max-height: 400px;
+  border: 1px solid #888;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255);
+}
+.cartMenu-modal .cart {
+  padding: 0;
+  min-height: 0;
+}
+.cartMenu-modal a {
+  position: absolute;
+  left: 2%;
+  top: 2%;
+  color: black;
+  z-index: 6;
+}
+.cartMenu-modal .cart-container-item {
+  max-height: 280px;
+  overflow: auto;
+  position: relative;
+}
+.cartMenu-modal .cart-checkout {
+  padding: 2px;
+}
+.cartMenu-modal .checkoutButton {
+  padding: 5px 5px;
+  font-size: 15px;
+}
+.cartMenu-modal .cart-end {
+  margin: 0;
+  padding: 20px;
+}
+.cartMenu-modal .cart-item {
+  padding: 3px;
+  height: 100px;
+}
+.cartMenu-modal .cart-item img {
+  width: 60px;
+  height: 100%;
+  border-radius: 7px;
+}
+.cartMenu-modal .cart-item h4 {
+  font-size: 15px;
+}
+.cartMenu-modal .cart-item h5 {
+  font-size: 15px;
+}
+.cartMenu-modal .cart-item p {
+  font-size: 13px;
+}
+.cartMenu-modal .cart-item p,
+.cartMenu-modal .cart-item h5,
+.cartMenu-modal .cart-item h4 {
+  margin-bottom: 2px;
+}
+.cartMenu-modal .custom-select-size__control {
+  height: 10px;
+  padding: 0;
+  font-size: 15px;
+}
+.cartMenu-animation-enter {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.cartMenu-animation-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.cartMenu-animation-exit {
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+
+  opacity: 1;
+}
+
+.cartMenu-animation-exit-active {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+.cart-icon-button {
+  background-color: transparent;
+  border: none;
+  position: relative;
+}
+.cart-icon-button span {
+  background-color: rgb(211, 37, 37);
+  color: white;
+  border-radius: 50%;
+  padding: 0.25em 0.6em;
+  font-size: 0.75em;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5em;
+  height: 1.5em;
+}

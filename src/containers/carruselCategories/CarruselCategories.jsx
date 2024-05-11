@@ -8,6 +8,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import "./CarruselCategories.css";
+import BASE_URL from "../../Enviroment";
+import Loader from "../../loaders/Loader";
+import LoaderPage from "../../loaders/LoaderPage";
 
 const CarruselCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -18,8 +21,8 @@ const CarruselCategories = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8081/api/simple-categories"
-        ); // Asegúrate de tener la URL correcta
+          BASE_URL + "/api/simple-categories-home"
+        );
         setCategories(response.data);
       } catch (error) {
         setError(error);
@@ -31,7 +34,7 @@ const CarruselCategories = () => {
     fetchCategories();
   }, []);
 
-  if (loading) return <p>Cargando categorías...</p>;
+  if (loading) return <LoaderPage />;
   if (error) return <p>Error al cargar las categorías: {error.message}</p>;
 
   return (
@@ -60,10 +63,10 @@ const CarruselCategories = () => {
           <SwiperSlide key={category.id} className="carruselCategories-item">
             <Link
               className="carruselCategories-item-in"
-              to={`/home/store/${category.name}-${category.id}`}
+              to={`/store/${category.name}-${category.id}`}
             >
               <img
-                src={category.categoryImage || "default-image-url"} // Usar una imagen por defecto si no hay imagen
+                src={category.categoryImage || "default-image-url"}
                 alt={category.name}
               />
               <span>{category.name}</span>

@@ -3,7 +3,8 @@ import BASE_URL from "../Enviroment";
 
 // Función para obtener la configuración actualizada con el JWT más reciente
 const getConfig = () => {
-  const jwtToken = localStorage.getItem("JwtToken");
+  const jwtToken = localStorage.getItem("jwtToken");
+  console.log(jwtToken);
   return {
     headers: {
       Authorization: `Bearer ${jwtToken}`,
@@ -20,9 +21,9 @@ const CategoryService = {
 
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/categories`,
-        formData
-        // getConfig()
+        `${BASE_URL}/api/auth/admin/categories`,
+        formData,
+        getConfig()
       );
       return response.data;
     } catch (error) {
@@ -33,8 +34,8 @@ const CategoryService = {
   fetchAdminCategories: async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/categories`
-        // getConfig()
+        `${BASE_URL}/api/auth/admin/categories`,
+        getConfig()
       );
       return response.data;
     } catch (error) {
@@ -59,8 +60,8 @@ const CategoryService = {
   deleteCategory: async (id) => {
     try {
       await axios.delete(
-        `${BASE_URL}/api/categories/${id}`
-        //   , getConfig()
+        `${BASE_URL}/api/auth/admin/categories/${id}`,
+        getConfig()
       );
     } catch (error) {
       console.error("Error al borrar la categoría", error);
@@ -70,8 +71,8 @@ const CategoryService = {
   obtainSimpleCategories: async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/simple-categories`
-        // getConfig()
+        `${BASE_URL}/api/auth/admin/simple-categories`,
+        getConfig()
       );
       return response.data;
     } catch (error) {
@@ -81,7 +82,10 @@ const CategoryService = {
   },
   fetchCategoriesName: async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/name-categories`);
+      const response = await axios.get(
+        `${BASE_URL}/api/auth/admin/name-categories`,
+        getConfig()
+      );
       return response.data;
     } catch (error) {
       console.error("Error al obtener categorías", error);

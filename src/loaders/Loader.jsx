@@ -1,12 +1,14 @@
 import { ThreeCircles } from "react-loader-spinner";
-
+import "./Loader.css";
 const Loader = () => (
   <div className="loader">
     <ThreeCircles
-      loading={true}
-      width="15px"
-      height="15px"
-      color="rgb(244, 88, 168)"
+      height="20"
+      width="20"
+      color="white"
+      outerCircleColor="#cccccc"
+      innerCircleColor="#aaaaaa"
+      middleCircleColor="#888888"
     />
   </div>
 );

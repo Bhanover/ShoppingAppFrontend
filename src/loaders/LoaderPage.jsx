@@ -1,6 +1,6 @@
 import React from "react";
 import { ThreeCircles } from "react-loader-spinner";
-import "./LoaderPage.css"; // Asegúrate de que el archivo CSS está correctamente vinculado
+import "./LoaderPage.css";
 
 const LoaderPage = () => {
   return (
@@ -8,14 +8,14 @@ const LoaderPage = () => {
       <ThreeCircles
         height="80"
         width="80"
-        color="#ffffff" // Color blanco para los círculos
+        color="#ffffff"
         wrapperStyle={{ justifyContent: "center" }}
         wrapperClass="loader-wrapper"
         visible={true}
         ariaLabel="three-circles-rotating"
-        outerCircleColor="#cccccc" // Color gris claro para el círculo exterior
-        innerCircleColor="#aaaaaa" // Color gris medio para el círculo interior
-        middleCircleColor="#888888" // Color gris oscuro para el círculo del medio
+        outerCircleColor="#cccccc"
+        innerCircleColor="#aaaaaa"
+        middleCircleColor="#888888"
       />
     </div>
   );

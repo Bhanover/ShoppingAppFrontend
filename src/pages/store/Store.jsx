@@ -12,8 +12,8 @@ const Store = () => {
   const { categoryNameWithId, subCategoryNameWithId } = useParams();
 
   useEffect(() => {
-    if (location.pathname === "/home/store") {
-      navigate("/home/store/novedades", { replace: true });
+    if (location.pathname === "/store") {
+      navigate("/store/novedades", { replace: true });
     }
   }, [location.pathname, navigate]);
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import BASE_URL from "../Enviroment";
 
 const getConfig = () => {
-  const jwtToken = localStorage.getItem("JwtToken");
+  const jwtToken = localStorage.getItem("jwtToken");
   return {
     headers: {
       Authorization: `Bearer ${jwtToken}`,
@@ -20,9 +20,9 @@ const SubCategoryService = {
 
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/subcategories`,
-        formData
-        // getConfig()
+        `${BASE_URL}/api/auth/admin/subcategories`,
+        formData,
+        getConfig()
       );
       return response.data;
     } catch (error) {
@@ -34,12 +34,12 @@ const SubCategoryService = {
   obtainSubCategories: async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/subcategories`
-        // getConfig()
+        `${BASE_URL}/api/auth/admin/subcategories`,
+        getConfig()
       );
       return response.data;
     } catch (error) {
-      console.error("Error al obtener categorías", error);
+      console.error("Error al obtener sub-categorías", error);
       throw error;
     }
   },
@@ -47,8 +47,8 @@ const SubCategoryService = {
   deleteSubCategory: async (id) => {
     try {
       await axios.delete(
-        `${BASE_URL}/api/subcategories/${id}`
-        //   , getConfig()
+        `${BASE_URL}/api/auth/admin/subcategories/${id}`,
+        getConfig()
       );
     } catch (error) {
       console.error("Error al borrar la categoría", error);

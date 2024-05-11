@@ -17,7 +17,6 @@ const BottomBar = () => {
     empresa: window.innerWidth > 860,
     app: window.innerWidth > 860,
     pago: window.innerWidth > 860,
-    social: window.innerWidth > 860,
   });
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const BottomBar = () => {
         empresa: shouldShowDropdowns,
         app: shouldShowDropdowns,
         pago: shouldShowDropdowns,
-        social: shouldShowDropdowns,
       });
     };
 
@@ -136,22 +134,10 @@ const BottomBar = () => {
             <a href="#">googleplay</a>
           </div>
           <div className="bottomBar-social">
-            <div
-              className="bottomBar-header"
-              onClick={() => toggleDropdown("social")}
-            >
+            <div className="bottomBar-header">
               <h4>SIGUENOS</h4>
-              {showDropdown.social ? (
-                <FontAwesomeIcon icon={faChevronUp} />
-              ) : (
-                <FontAwesomeIcon icon={faChevronDown} />
-              )}
             </div>
-            <div
-              className={`bottomBar-dropdown-content ${
-                showDropdown.social ? "show" : ""
-              }`}
-            >
+            <div className="bottomBar-dropdown-content show">
               <div className="bottomBar-row">
                 <Link to="/instagram">
                   <FontAwesomeIcon icon={faInstagram} />

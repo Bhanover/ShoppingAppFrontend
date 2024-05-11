@@ -1,6 +1,7 @@
 .bottomBar {
   width: 100%;
   height: auto;
+  background-color: rgba(82, 82, 82, 0.7);
 }
 .bottomBar-container {
   width: 100%;
@@ -33,10 +34,11 @@
   font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
+  color: white;
 }
 .bottomBar-column a {
   margin-bottom: 5px;
-  color: #666;
+  color: #ffffff;
   text-decoration: none;
   font-size: 16px;
 }
@@ -52,7 +54,7 @@
 .bottomBar svg {
   height: 40px;
   width: auto;
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .bottomBar-links a:hover {
@@ -62,7 +64,7 @@
 .bottomBar-links a:not(:last-child)::after {
   content: "|";
   margin-left: 20px;
-  color: #aaa;
+  color: #ffffff;
 }
 
 .bottomBar-dropdown-content {
@@ -89,7 +91,7 @@
 
 .bottomBar-links a {
   text-decoration: none;
-  color: #000;
+  color: #ffffff;
   font-size: 14px;
 }
 @media (max-width: 860px) {

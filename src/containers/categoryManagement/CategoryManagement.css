@@ -48,7 +48,6 @@
   cursor: pointer;
 }
 .categoryManagement-button {
-  position: relative;
   background-color: #007bff;
   color: white;
   padding: 8px 15px;
@@ -61,6 +60,7 @@
   align-items: center;
   min-width: 120px;
   min-height: 40px;
+  position: relative;
 }
 .categoryManagement-button:disabled {
   background-color: #4e4e4e;
@@ -79,38 +79,42 @@
 }
 .table-wrapper {
   height: 440px;
-  overflow-x: auto; /* Permite el desplazamiento horizontal sólo si es necesario */
-  max-width: 100%; /* Contenedor ajustable al ancho del viewport o su contenedor */
-  border: 2px solid black;
+  overflow-x: auto;
+  max-width: 100%;
+  border: 1px solid rgb(210, 207, 207);
+  position: relative;
 }
 
 .categoryManagement-table {
-  width: auto; /* Permite que la tabla se ajuste al ancho del contenedor */
-  width: 100%; /* Asegura que la tabla no sobrepase el ancho del contenedor */
-  border-collapse: collapse; /* Espacio entre los bordes de las celdas eliminado */
+  width: 100%;
+  border-collapse: collapse;
 }
-
+.categoryManagement-table-subcategories {
+  text-align: left !important;
+  list-style-type: square;
+  color: #474646;
+}
 .categoryManagement-table th,
 .categoryManagement-table td {
-  border: 1px solid #555555; /* Borde más suave */
-  padding: 9.5px; /* Espacio interno */
-  text-align: center; /* Texto centrado */
+  border: 1px solid #c6c4c4;
+  padding: 5px;
+  text-align: center;
 }
 
 .categoryManagement-table tbody {
-  overflow-y: auto; /* Desplazamiento vertical si es necesario */
-  max-height: 400px; /* Altura máxima antes de desplazar */
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 .categoryManagement-table thead,
 .categoryManagement-table tbody tr {
   width: 100%;
-  table-layout: fixed; /* Anchura de columna fija */
+  table-layout: fixed;
 }
 
 .categoryManagement-table img {
-  width: 100px; /* Ancho fijo para las imágenes */
-  height: auto; /* Altura automática para mantener la proporción */
+  width: 100px;
+  height: 100px;
 }
 .categoryManagement-table tbody td {
   height: 20px;

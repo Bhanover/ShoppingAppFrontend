@@ -12,6 +12,7 @@ import CarruselCategories from "../../containers/carruselCategories/CarruselCate
 import NewsletterSignUp from "../../containers/newsletter_sign_up/NewsletterSignUp";
 import BottomBar from "../../containers/bottomBar/BottomBar";
 import LoaderPage from "../../loaders/LoaderPage";
+import BASE_URL from "../../Enviroment";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -23,12 +24,13 @@ const Home = () => {
   setTimeout(() => setLoading(false), 2000);
   useEffect(() => {
     axios
-      .get("http://localhost:8081/api/simple-name-categories")
+      .get(BASE_URL + "/api/simple-name-categories")
       .then((response) => {
         const categoriesData = response.data;
         setShoesCategory(
           categoriesData.find(
-            (category) => category.name.toLowerCase() === "zapatos"
+            (category) =>
+              category.name.toLowerCase() === "zapatos".toLowerCase()
           )
         );
         setDressesCategory(
@@ -36,12 +38,15 @@ const Home = () => {
             (category) => category.name.toLowerCase() === "vestidos"
           )
         );
+        console.log(shoesCategory);
         setCategories(categoriesData);
       })
+
       .catch((error) => {
         console.error("Error fetching categories", error);
       });
   }, []);
+
   if (loading) {
     return <LoaderPage />;
   }
@@ -61,7 +66,7 @@ const Home = () => {
         modules={[Mousewheel, Pagination]}
       >
         <SwiperSlide className="home-image1">
-          <ButtonHome nombre="novedades" />
+          <ButtonHome name="novedades" />
         </SwiperSlide>
         <SwiperSlide className="home-categories">
           <CarruselCategories />
@@ -76,7 +81,7 @@ const Home = () => {
         <SwiperSlide className="home-image3">
           {dressesCategory ? (
             <ButtonHome
-              nombre={`${dressesCategory.name}-${dressesCategory.id}`}
+              name={`${dressesCategory.name}-${dressesCategory.id}`}
             />
           ) : (
             <p>Categoría 'Vestidos' no encontrada</p>

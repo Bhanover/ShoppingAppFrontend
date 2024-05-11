@@ -4,14 +4,14 @@
   text-align: center;
 }
 .buttonHome a {
-  background-color: transparent;
+  background-color: rgba(82, 82, 82, 0.7);
   padding: 10px;
-  border-radius: 10px;
-  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
   color: white;
   cursor: pointer;
+  font-family: "Jersey 10", sans-serif;
+  font-size: 20px;
 }
 .buttonHome a:hover {
-  color: rgb(243, 241, 241);
-  background-color: rgba(82, 82, 82, 0.7);
+  border: 1px solid white;
 }

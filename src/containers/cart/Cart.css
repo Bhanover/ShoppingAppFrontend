@@ -37,7 +37,7 @@
 .cart-item p {
   margin-bottom: 10px;
 }
-.cart-item button {
+.cart-item-button {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -48,6 +48,16 @@
   flex-direction: column;
   right: 10px;
   bottom: 10px;
+}
+.cart-quantity-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 55px;
+}
+.cart-quantity-controls button {
+  width: 10px;
 }
 .cart-end {
   margin-top: 20px;

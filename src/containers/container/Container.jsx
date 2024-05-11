@@ -1,26 +1,43 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Container.css";
 import TopBar from "../topBar/TopBar";
 import BottomBar from "../bottomBar/BottomBar";
+import WhatsAppButton from "../../components/whatssap_button/WhatsAppButton";
+import loadGoogleAnalytics from "../cookieBanner/LoadGoogleAnalytics";
+import CookieBanner from "../cookieBanner/CookieBanner";
 
 const Container = () => {
   const location = useLocation();
+  const [isVisible, setIsVisible] = useState(
+    !localStorage.getItem("cookiePreferences")
+  );
 
   useEffect(() => {
-    // Cada vez que cambia la ruta, se desplaza la ventana al inicio de la página
-    window.scrollTo(0, 0);
-  }, [location.pathname]); // Dependencia del efecto: el pathname de la ubicación
+    const storedPreferences = localStorage.getItem("cookiePreferences");
+    const preferences = storedPreferences && JSON.parse(storedPreferences);
 
+    if (preferences && preferences.analytics) {
+      loadGoogleAnalytics();
+    } else if (preferences === null) {
+      setIsVisible(true);
+    }
+  }, []);
   return (
     <div className="container">
       <div className="container-top">
         <TopBar />
       </div>
+      {isVisible && (
+        <CookieBanner isVisible={isVisible} setIsVisible={setIsVisible} />
+      )}
       <div className="container-outlet">
         <Outlet />
+        <div className="container-whatsAppButton">
+          <WhatsAppButton />
+        </div>
       </div>
-      {location.pathname !== "/home" && (
+      {location.pathname !== "/" && (
         <div className="container-bottombar">
           <BottomBar />
         </div>
