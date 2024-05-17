@@ -1,8 +1,5 @@
 # SHOPPING APP FRONTED
 
- 
-
-
 [![Download IntelliJ IDEA](https://img.shields.io/badge/download-IntelliJ%20IDEA-blue)](https://www.jetbrains.com/idea/download/)
 [![React](https://img.shields.io/badge/React-^17.0.0-blue)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-^14.0.0-green)](https://nodejs.org/)
@@ -12,17 +9,50 @@
 [![CSS](https://img.shields.io/badge/CSS-3-blue)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Java](https://img.shields.io/badge/Java-^11.0-orange)](https://www.java.com/)
 
-
 <p align="center">
-    <a href="https://www.youtube.com/watch?v=OknDmeu9GZs">
-  <img src="https://github.com/Bhanover/ShoppingAppFrontend/assets/127310131/12f91de9-c497-4bc4-890d-7de6933fd7ff" alt="logo" width="300">
+    <a href="https://www.youtube.com/watch?v=haPTJ8KhQ7k">
+        <img src="https://github.com/Bhanover/ShoppingAppFrontend/assets/127310131/12f91de9-c497-4bc4-890d-7de6933fd7ff" alt="logo" width="300">
     </a>
 </p>
 
+## Índice
+
+- [Descripción](#descripción)
+- [Video del Proyecto](#video-del-proyecto)
+- [Características Principales](#características-principales)
+  - [Para Usuarios](#para-usuarios)
+  - [Para Administradores](#para-administradores)
+  - [Adaptabilidad y Seguridad](#adaptabilidad-y-seguridad)
+- [Bibliotecas y Dependencias](#bibliotecas-y-dependencias)
+  - [Cliente (usando React+Vite)](#cliente-usando-reactvite)
+- [Requisitos del Sistema](#requisitos-del-sistema)
+- [Instalación y Configuración del entorno de desarrollo](#instalación-y-configuración-del-entorno-de-desarrollo)
+  - [Visual Studio Code](#visual-studio-code)
+- [Cómo Empezar](#cómo-empezar)
+  - [Cliente (React)](#cliente-react)
+- [Guía de Uso Detallada](#guía-de-uso-detallada)
+  - [Para Usuarios](#para-usuarios-1)
+    - [Navegación y Exploración de Productos](#navegación-y-exploración-de-productos)
+    - [Registro e Inicio de Sesión](#registro-e-inicio-de-sesión)
+    - [Carrito de Compras](#carrito-de-compras)
+    - [Página de Contacto](#página-de-contacto)
+  - [Para Administradores](#para-administradores-1)
+    - [Gestión de Productos](#gestión-de-productos)
+    - [Gestión de Categorías y Subcategorías](#gestión-de-categorías-y-subcategorías)
+    - [Panel de Administración](#panel-de-administración)
+  - [Adaptabilidad y Seguridad](#adaptabilidad-y-seguridad-1)
+- [Información Importante](#información-importante)
+- [Cómo Contribuir](#cómo-contribuir)
+- [Contacto](#contacto)
+- [Licencia](#licencia)
 
 ## Descripción
-Store es una página enfocada en la venta de ropa. Se busca proporcionar una experiencia de compra segura, eficiente y visualmente atractiva, permitiendo a los usuarios explorar y
-adquirir productos desde cualquier dispositivo
+Store es una página enfocada en la venta de ropa. Se busca proporcionar una experiencia de compra segura, eficiente y visualmente atractiva, permitiendo a los usuarios explorar y adquirir productos desde cualquier dispositivo.
+
+## Video del Proyecto
+Aquí puedes ver un video demostrativo del proyecto:
+
+[![Video del Proyecto](https://img.youtube.com/vi/haPTJ8KhQ7k/0.jpg)](https://www.youtube.com/watch?v=haPTJ8KhQ7k)
 
 ## Características Principales
 
@@ -77,7 +107,6 @@ Para ejecutar este proyecto, necesitarás lo siguiente instalado en tu sistema:
 - Git
 - Un IDE adecuado como Visual Studio Code para React.
 
-
 ### Instalación y Configuración del entorno de desarrollo
 
 #### Visual Studio Code
@@ -85,17 +114,15 @@ Para ejecutar este proyecto, necesitarás lo siguiente instalado en tu sistema:
 2. Abre Visual Studio Code y selecciona "Open Folder" desde el menú "File". Busca y selecciona la carpeta del cliente dentro del proyecto que clonaste.
 3. Ejecuta `npm install` en la terminal de Visual Studio Code para instalar las dependencias necesarias del cliente.
 
- 
 ## Cómo Empezar
 Después de configurar el entorno de desarrollo el cliente de la siguiente manera:
 
 ### Cliente (React)
 1. Abre Visual Studio Code y navega a la terminal integrada.
-2. Asegúrate de que estás en la carpeta del cliente `/shoppinappfronted` y ejecuta `npm install` en la terminal para actualizar las dependecias alojadas en el proyecto.
+2. Asegúrate de que estás en la carpeta del cliente `/shoppinappfronted` y ejecuta `npm install` en la terminal para actualizar las dependencias alojadas en el proyecto.
 3. A continuación añade `npm run dev` esto iniciará el cliente, y generalmente se abrirá automáticamente en una nueva pestaña de tu navegador.
 
 ![image](https://github.com/Bhanover/ShoppingAppFrontend/assets/127310131/3445d1d3-9fba-4750-85f2-36065b33ca94)
-
 
 Una vez que el servidor y el cliente estén funcionando, puedes interactuar con la aplicación a través de tu navegador.
 
@@ -186,11 +213,9 @@ Una vez que el servidor y el cliente estén funcionando, puedes interactuar con 
 
 Una posible solución es que si hiciste todos los pasos bien , ademas de eso tienes que tener el programa de Mysql abierto.
 
+- **Activar Lombook:** En Spring Boot al iniciar el proyecto por primera vez , Spring Boot te pedira que actives la Lombook y en ese caso das click a `enabled lombook`.
 
-- **Activar Lombook:** En Spring Boot al iniciar el proyecto por primera vez , Spring Boot te pedira que actives la Lombook y en ese caso das click a `enabled lombook`
-
-
- ## Cómo Contribuir
+## Cómo Contribuir
 Las contribuciones son bienvenidas y apreciadas. Sigue estos pasos para contribuir:
 1. Haz un "Fork" del repositorio.
 2. Clona el fork a tu máquina local.
@@ -202,9 +227,9 @@ Las contribuciones son bienvenidas y apreciadas. Sigue estos pasos para contribu
 
 Por favor, asegúrate de que tu código sigue las convenciones de estilo del proyecto y que has añadido pruebas para cualquier cambio que hagas, si es aplicable.
 
-
 ## Contacto
 Si tienes preguntas o deseas discutir algo sobre el proyecto, no dudes en contactarme a través de mi correo electrónico: billydht5@gmail.com
 
 ## Licencia
 Este proyecto está licenciado bajo [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
