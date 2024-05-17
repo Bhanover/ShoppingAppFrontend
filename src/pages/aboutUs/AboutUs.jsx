@@ -18,8 +18,8 @@ const AboutUs = () => {
       </Helmet>
 
       <section className="intro">
-        <h1>Bienvenidos a StyleSwype.shop</h1>
-        <img src="/static/logo_page/StyleSwype.svg" alt="logo" />
+        <h1>Bienvenidos a Shop.shop</h1>
+        <img src="/images/logo.png" alt="logo" />
         <p>
           Somos un equipo dedicado a ofrecer ropa de calidad a través de nuestra
           plataforma online. Con sede en España, nos enorgullecemos de brindar
@@ -31,7 +31,7 @@ const AboutUs = () => {
       <section className="ourStory">
         <h2>Nuestra Historia</h2>
         <p>
-          StyleSwype.shop nació de la pasión por la moda y el deseo de hacerla
+          Shop.shop nació de la pasión por la moda y el deseo de hacerla
           accesible para todos. Desde nuestros inicios, nos hemos comprometido a
           ofrecer prendas de alta calidad, seleccionadas cuidadosamente para
           nuestros clientes.
@@ -76,8 +76,8 @@ const AboutUs = () => {
       <section className="customerCommitment">
         <h2>Compromiso con Nuestros Clientes</h2>
         <p>
-          En StyleSwype.shop, la satisfacción del cliente es nuestra prioridad.
-          Nos esforzamos por brindar la mejor experiencia de compra.
+          En Shop.shop, la satisfacción del cliente es nuestra prioridad. Nos
+          esforzamos por brindar la mejor experiencia de compra.
         </p>
       </section>
 

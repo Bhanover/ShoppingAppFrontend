@@ -1,9 +1,8 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightDots,
-  faArrowUpRightFromSquare,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
 import { CSSTransition } from "react-transition-group";
@@ -15,12 +14,32 @@ const CartMenu = () => {
   const { cartCount } = useContext(CartContext);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  const toggleCart = () => setIsCartOpen(!isCartOpen);
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (
+      cartRef.current &&
+      !cartRef.current.contains(event.target) &&
+      !buttonRef.current.contains(event.target)
+    ) {
+      setIsCartOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="cartMenu">
-      <button onClick={toggleCart} className="cart-icon-button">
+      <button ref={buttonRef} onClick={toggleCart} className="cart-icon-button">
         <FontAwesomeIcon icon={faShoppingCart} />
         {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
       </button>

@@ -38,9 +38,6 @@ const UserRegister = () => {
 
   return (
     <div className="registerMain">
-      <Link to="/">
-        <img src="/public/images/logo.png" alt="logo" />
-      </Link>
       <div className="register-form">
         <h1>User Registration</h1>
         <form onSubmit={onSubmit}>
@@ -79,6 +76,7 @@ const UserRegister = () => {
             Register
           </button>
         </form>
+        <Link to="/login">Loguearse</Link>
       </div>
     </div>
   );

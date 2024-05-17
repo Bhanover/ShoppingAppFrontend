@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import axios from "axios";
+import BASE_URL from "../../Enviroment";
 const ContactDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,10 +23,10 @@ const ContactDetails = () => {
       tema: formData.get("tema"),
       mensaje: formData.get("mensaje"),
     };
-    /*
+
     // Enviar los datos al endpoint de Spring Boot usando axios
     axios
-      .post(`${BASE_URL}/api/auth/contact`, data, {
+      .post(`${BASE_URL}/api/contact`, data, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
@@ -36,7 +37,6 @@ const ContactDetails = () => {
       .catch((error) => {
         console.error("Error al enviar el mensaje:", error);
       });
-      */
   };
 
   return (

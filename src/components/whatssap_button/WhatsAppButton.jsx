@@ -6,7 +6,7 @@ import "./WhatsAppButton.css";
 const WhatsAppButton = () => {
   const [showModal, setShowModal] = useState(false);
   const phoneNumber = "+34604098925";
-  const defaultMessage = "Hola, estoy necesito informacion sobre los productos";
+  const defaultMessage = "Hola, necesito informacion sobre los productos";
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     defaultMessage
   )}`;

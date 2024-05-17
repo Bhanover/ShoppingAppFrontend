@@ -9,8 +9,8 @@
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  font-family: "Jersey 10", sans-serif;
-  font-size: 20px;
+  font-size: 15px;
+  text-transform: uppercase;
 }
 .buttonHome a:hover {
   border: 1px solid white;

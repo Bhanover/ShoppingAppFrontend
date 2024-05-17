@@ -129,7 +129,7 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
                 </div>
                 <div className="infiniteStore-details-container">
                   <p>{item.name}</p>
-                  <p>{item.price}</p>
+                  <p>{item.price}€</p>
                 </div>
               </Link>
             </div>

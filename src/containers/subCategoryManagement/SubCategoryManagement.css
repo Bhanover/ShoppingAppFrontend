@@ -78,7 +78,7 @@
   background-color: #c82333;
 }
 .subtable-wrapper {
-  height: 440px;
+  max-height: 490px;
   overflow-x: auto;
   max-width: 100%;
   border: 1px solid rgb(210, 207, 207);

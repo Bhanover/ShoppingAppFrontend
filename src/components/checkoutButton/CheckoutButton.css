@@ -1,6 +1,6 @@
 /* Cart.css */
 .checkoutButton {
-  background-color: #4caf50;
+  background-color: #47f14c;
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -15,4 +15,7 @@
 .checkoutButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+.checkoutButton:hover :not(.checkoutButton:disabled) {
+  background-color: #1aa01f;
 }

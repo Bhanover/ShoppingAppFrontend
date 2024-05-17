@@ -2,32 +2,27 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./CookieBanner.css";
 import loadGoogleAnalytics from "./LoadGoogleAnalytics";
-import { FaTimes, FaChevronDown, FaChevronUp } from "react-icons/fa"; // Importa íconos adicionales
+import { FaTimes, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const cookieInfoDetails = {
   necessary: {
     description:
       "Estas cookies son necesarias para que la Plataforma funcione y no se pueden desactivar en nuestros sistemas...",
-    // ... más propiedades si es necesario
   },
   functional: {
     description:
       "Estas cookies permiten que la Plataforma ofrezca una mejor funcionalidad y personalización...",
-    // ... más propiedades si es necesario
   },
   analytical: {
     description:
       "Estas cookies nos permiten contar las visitas y fuentes de circulación para poder medir y mejorar el desempeño...",
-    // ... más propiedades si es necesario
   },
   advertising: {
     description:
       "Estas cookies pueden estar en toda la Plataforma, colocadas por nuestros socios publicitarios...",
-    // ... más propiedades si es necesario
   },
 };
 
-// Componente principal del banner de cookies
 const CookieBanner = ({ isVisible, setIsVisible }) => {
   const [cookiePreferences, setCookiePreferences] = useState({
     necessary: true,
@@ -36,17 +31,13 @@ const CookieBanner = ({ isVisible, setIsVisible }) => {
     advertising: false,
   });
 
-  // El estado showDetails parece redundante junto con showBanner. Parece que showBanner es suficiente
-  // para controlar la visibilidad del banner de configuración detallado.
-  // Deberías considerar remover showDetails si no es necesario para otra lógica.
   const [showDetails, setShowDetails] = useState({
     necessary: false,
     functional: false,
     analytical: false,
     advertising: false,
   });
-  // Función toggleCookiePreference no estaba definida previamente en tu código
-  // Añade esta función para cambiar el estado de las preferencias de las cookies
+
   const toggleCookiePreference = (category) => {
     if (category === "necessary") return;
     setCookiePreferences((prev) => ({
@@ -63,23 +54,22 @@ const CookieBanner = ({ isVisible, setIsVisible }) => {
       advertising: newState,
     });
   };
-  const [showBanner, setShowBanner] = useState(false); // Estado para la visibilidad del banner detallado
+  const [showBanner, setShowBanner] = useState(false);
 
-  // Función para abrir la configuración de cookies detallada
   const openCookieSettings = () => {
-    setShowBanner(true); // Muestra el banner detallado
+    setShowBanner(true);
   };
 
   // Función para aceptar todas las cookies
   const handleAcceptAll = () => {
     setAllCookies(true);
-    setIsVisible(false); // Cierra el banner principal
+    setIsVisible(false);
   };
 
   // Función para rechazar todas las cookies
   const handleRejectAll = () => {
     setAllCookies(false);
-    setIsVisible(false); // Cierra el banner principal
+    setIsVisible(false);
   };
 
   // Función para alternar los detalles de cada categoría de cookies
@@ -146,7 +136,7 @@ const CookieBanner = ({ isVisible, setIsVisible }) => {
             También puedes aceptar todas las cookies pulsando el botón “Aceptar
             todas las cookies”. Para más información puedes visitar nuestra
             <a
-              href="/static/cookies_policy/cookies_policy_es.pdf"
+              href="/cookies_policy/cookies_policy_es.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -175,7 +165,7 @@ const CookieBanner = ({ isVisible, setIsVisible }) => {
               proporcionar funciones de redes sociales y analizar nuestro
               tráfico.
               <a
-                href="/static/cookies_policy/cookies_policy_es.pdf"
+                href="/cookies_policy/cookies_policy_es.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >

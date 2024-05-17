@@ -10,7 +10,7 @@ const ButtonHome = ({ name }) => {
 
   return (
     <div className="buttonHome">
-      <Link to={path}>Click me {nameHome}</Link>
+      <Link to={path}>Ver {nameHome}</Link>
     </div>
   );
 };

@@ -38,6 +38,7 @@ const BottomBar = () => {
   const toggleDropdown = (section) => {
     setShowDropdown((prev) => ({ ...prev, [section]: !prev[section] }));
   };
+
   return (
     <footer className="bottomBar">
       <div className="bottomBar-container">
@@ -85,14 +86,11 @@ const BottomBar = () => {
               showDropdown.empresa ? "show" : ""
             }`}
           >
-            <a href="/about">Quiénes somos</a>
-            <a href="/stores">Localizador de tiendas</a>
-            <a href="/about">Quiénes somos</a>
-            <a href="/stores">Localizador de tiendas</a>
-            <a href="/about">Quiénes somos</a>
-            <a href="/stores">Localizador de tiendas</a>
+            <Link to="/about-us">Quiénes somos</Link>
+            <Link to="/stores">Localizador de tiendas</Link>
           </div>
         </div>
+
         <div className="bottomBar-column">
           <div
             className="bottomBar-header"
@@ -110,8 +108,8 @@ const BottomBar = () => {
               showDropdown.app ? "show" : ""
             }`}
           >
-            <a href="#">appStore</a>
-            <a href="#">googleplay</a>
+            <a href="#">App Store</a>
+            <a href="#">Google Play</a>
           </div>
 
           <div
@@ -127,15 +125,16 @@ const BottomBar = () => {
           </div>
           <div
             className={`bottomBar-dropdown-content ${
-              showDropdown.app ? "show" : ""
+              showDropdown.pago ? "show" : ""
             }`}
           >
-            <a href="#">appStore</a>
-            <a href="#">googleplay</a>
+            <a href="#">Visa</a>
+            <a href="#">Mastercard</a>
           </div>
+
           <div className="bottomBar-social">
             <div className="bottomBar-header">
-              <h4>SIGUENOS</h4>
+              <h4>SÍGUENOS</h4>
             </div>
             <div className="bottomBar-dropdown-content show">
               <div className="bottomBar-row">

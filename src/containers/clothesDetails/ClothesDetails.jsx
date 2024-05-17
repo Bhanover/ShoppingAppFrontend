@@ -107,7 +107,7 @@ const ClothesDetails = () => {
       <div className="clothesDetails-info-container">
         <div className="clothesDetails-info-container-details">
           <h1>{item.name}</h1>
-          <h1>{item.price}</h1>
+          <h1>{item.price}€</h1>
           <p>{item.description}</p>
         </div>
         <div className="clothesDetails-info-container-options">

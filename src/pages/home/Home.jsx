@@ -20,7 +20,6 @@ const Home = () => {
   const [dressesCategory, setDressesCategory] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Simula el proceso de carga
   setTimeout(() => setLoading(false), 2000);
   useEffect(() => {
     axios
@@ -65,7 +64,11 @@ const Home = () => {
         }}
         modules={[Mousewheel, Pagination]}
       >
-        <SwiperSlide className="home-image1">
+        <SwiperSlide className="home-video1">
+          <video autoPlay loop muted>
+            <source src="/video/videoHome1.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           <ButtonHome name="novedades" />
         </SwiperSlide>
         <SwiperSlide className="home-categories">
@@ -88,7 +91,9 @@ const Home = () => {
           )}
         </SwiperSlide>
         <SwiperSlide className="home-newsletter">
+          <div className="home-newsletter-background"></div>
           <NewsletterSignUp />
+          <div className="home-newsletter-background"></div>
         </SwiperSlide>
         <SwiperSlide className="home-bottomBar">
           <BottomBar />

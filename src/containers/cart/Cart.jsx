@@ -78,16 +78,16 @@ const Cart = () => {
             </div>
           </div>
         ))}
-        <div className="cart-end">
-          <div className="cart-total">
-            <h4>Total del Carrito: {total.toFixed(2)} €</h4>
-          </div>
-          <div className="cart-checkout">
-            <CheckoutButton
-              onCheckout={handleCheckout}
-              disabled={cartItems.length === 0}
-            />
-          </div>
+      </div>
+      <div className="cart-end">
+        <div className="cart-total">
+          <h4>Total del Carrito: {total.toFixed(2)} €</h4>
+        </div>
+        <div className="cart-checkout">
+          <CheckoutButton
+            onCheckout={handleCheckout}
+            disabled={cartItems.length === 0}
+          />
         </div>
       </div>
     </div>

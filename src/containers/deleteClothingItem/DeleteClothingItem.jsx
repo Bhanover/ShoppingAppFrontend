@@ -12,7 +12,6 @@ const DeleteClothingItem = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Espera por la respuesta del servicio antes de actualizar el estado
         const items = await ClothesService.getClothingItemNameAndId();
         setProducts(items);
       } catch (error) {
@@ -37,9 +36,9 @@ const DeleteClothingItem = () => {
   };
 
   return (
-    <div className="product-list">
+    <div className="delete-product-list">
       {products.map((product) => (
-        <div key={product.id} className="product-item">
+        <div key={product.id} className="delete-product-item">
           <span>
             {product.id} - {product.name}
           </span>

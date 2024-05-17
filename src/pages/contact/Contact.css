@@ -1,11 +1,14 @@
 .contact {
-  background-image: url("/public/images/contact.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(94, 93, 96) 50%,
+    rgb(146, 144, 145) 79%
+  );
 }
 .contact-container {
-  padding-top: 40px;
+  padding-top: 150px;
+  padding-bottom: 100px;
 }
 .contact-back-button {
   color: white;

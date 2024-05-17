@@ -8,10 +8,19 @@
   border-radius: 5px;
   margin-top: 20px;
 }
-
+.add-cart {
+  position: relative;
+}
 .add-to-cart-button:hover {
   background-color: #659f1c;
 }
 .add-to-cart-button:disabled {
   background-color: rgb(160, 165, 165);
+}
+.notification {
+  text-align: center;
+  position: absolute;
+  top: 3px;
+  color: rgb(93, 93, 93);
+  font-size: 0.8rem;
 }

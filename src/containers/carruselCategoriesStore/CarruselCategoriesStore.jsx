@@ -49,17 +49,17 @@ const CarruselCategoriesStore = ({ categoryNameWithId }) => {
         spaceBetween={0}
         scrollbar={{ draggable: true }}
         breakpoints={{
-          320: {
+          300: {
             slidesPerView: Math.max(3),
-            spaceBetween: 0,
+            spaceBetween: 3,
           },
-          480: {
+          505: {
             slidesPerView: Math.max(4),
-            spaceBetween: 0,
+            spaceBetween: 5,
           },
           860: {
-            slidesPerView: Math.max(7),
-            spaceBetween: 0,
+            slidesPerView: Math.max(6),
+            spaceBetween: 7,
           },
         }}
       >

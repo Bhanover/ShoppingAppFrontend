@@ -1,25 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../../context/cartContext/CartContext";
 import "./AddToCartButton.css";
-import "react-toastify/dist/ReactToastify.css";
 
-import { toast, ToastContainer } from "react-toastify";
 const AddToCartButton = ({ product, selectedSize }) => {
   const { addToCart } = useContext(CartContext);
+  const [message, setMessage] = useState("");
 
   const handleClick = () => {
     if (!selectedSize) {
-      toast.warn("Por favor, selecciona un tamaño.");
+      setMessage("Por favor, selecciona un tamaño.");
       return;
     }
-    const toastId = `product-${product.id}-size-${selectedSize.value}`;
     addToCart(product, selectedSize);
-    toast.success("Producto añadido al carrito con éxito", { toastId });
+    setMessage("Producto añadido al carrito con éxito");
   };
 
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
-    <div>
-      <ToastContainer />
+    <div className="add-cart">
+      {message && <p className="notification">{message}</p>}
       <button
         className="add-to-cart-button"
         onClick={handleClick}

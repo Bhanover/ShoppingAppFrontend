@@ -1,11 +1,15 @@
 .aboutUsContainer {
-  margin: 20px;
-  padding: 20px;
   text-align: center;
-  background-color: transparent;
+  background: linear-gradient(
+    180deg,
+    rgb(189, 188, 211) 0%,
+    rgb(94, 93, 96) 50%,
+    rgb(146, 144, 145) 79%
+  );
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: rgb(0, 0, 0);
+  color: rgb(252, 251, 251);
+  padding: 160px 0;
 }
 .intro {
   display: flex;

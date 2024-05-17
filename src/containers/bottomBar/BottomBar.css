@@ -1,7 +1,10 @@
 .bottomBar {
   width: 100%;
-  height: auto;
-  background-color: rgba(82, 82, 82, 0.7);
+  max-height: 550px;
+  background-color: rgba(82, 82, 82);
+  position: absolute;
+  bottom: 0;
+  overflow: auto;
 }
 .bottomBar-container {
   width: 100%;

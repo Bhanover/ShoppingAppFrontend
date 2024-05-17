@@ -62,14 +62,13 @@ function App() {
               element={<SubCategoryManagement />}
             />
           </Route>
-          <Route path="/cookie" element={<CookieBanner />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/login" element={<UserLogin />}></Route>
-          <Route path="/register" element={<UserRegister />}></Route>
 
-          <Route path="/about-us" element={<AboutUs />}></Route>
           <Route path="/" element={<Container />}>
             <Route index element={<Home />} />
+            <Route path="/contact" element={<Contact />}></Route>
+            <Route path="/login" element={<UserLogin />}></Route>
+            <Route path="/register" element={<UserRegister />}></Route>
+            <Route path="/about-us" element={<AboutUs />}></Route>
             <Route path="/cart" element={<Cart />} />
             <Route path="/store" element={<Store />}>
               <Route path=":categoryNameWithId" element={<Store />} />

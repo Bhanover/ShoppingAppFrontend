@@ -146,6 +146,7 @@ const TopBar = () => {
                     <Link
                       to={`/store/${categoria.name}-${categoria.id}`}
                       alt={`/${categoria.name}`}
+                      onClick={() => menuOpen()}
                     >
                       <img
                         src={categoria.categoryImage}
