@@ -12,10 +12,12 @@ const UserRegister = () => {
   });
   const navigate = useNavigate();
 
+  // Manejar el cambio en los campos del formulario
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Manejar el envío del formulario
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -23,6 +25,7 @@ const UserRegister = () => {
       .post(BASE_URL + "/api/register", formData)
       .then((response) => {
         console.log("Registration successful", response.data);
+        // Redirigir al usuario a la página de login después del registro exitoso
         navigate("/login");
       })
       .catch((error) => {

@@ -44,7 +44,7 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
     } else {
       url = `${BASE_URL}/api/categories/${categoryId}/products`;
     }
-
+    // Establecer un temporizador para manejar el tiempo de espera
     timeoutRef.current = setTimeout(() => {
       if (loading) {
         setLoading(false);
@@ -75,6 +75,7 @@ const InfiniteStore = ({ categoryNameWithId, subCategoryNameWithId }) => {
 
     return () => clearTimeout(timeoutRef.current);
   }, [categoryNameWithId, subCategoryNameWithId]);
+  // Cargar más datos cuando se llega al final de la página
   const fetchMoreData = () => {
     if (items.length >= loadedItems.length) {
       setHasMore(false);

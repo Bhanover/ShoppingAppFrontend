@@ -9,7 +9,8 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import Logout from "../../components/logout/Logout";
-//Componente encargado de gestionar el panel de administración
+
+// Componente encargado de gestionar el panel de administración
 const AdminDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [lastWindowWidth, setLastWindowWidth] = useState(window.innerWidth);
@@ -20,6 +21,7 @@ const AdminDashboard = () => {
     setIsSidebarOpen(!isSidebarOpen);
     setManualToggle(true);
   };
+
   // Efecto para manejar el cambio de tamaño de la ventana y ajustar la barra lateral
   useEffect(() => {
     const handleResize = () => {
@@ -51,6 +53,7 @@ const AdminDashboard = () => {
             isSidebarOpen ? "expanded" : "collapsed"
           }`}
         >
+          {/* Botón para alternar la barra lateral */}
           <button onClick={toggleSidebar} className="sidebarToggle">
             {isSidebarOpen ? (
               <FontAwesomeIcon icon={faChevronLeft} />
@@ -58,6 +61,7 @@ const AdminDashboard = () => {
               <FontAwesomeIcon icon={faChevronRight} />
             )}
           </button>
+          {/* Enlaces de la barra lateral */}
           <Link to="/admin-dashboard/management" className="sidebarLink">
             Inicio
           </Link>
@@ -87,6 +91,7 @@ const AdminDashboard = () => {
           </Link>
         </div>
         <div className="adminDashboardContent">
+          {/* Barra superior */}
           <div className="adminDashboardContent-topBar">
             <div className="left"></div>
             <h1>Admin Management</h1>
@@ -97,6 +102,7 @@ const AdminDashboard = () => {
               <Logout />
             </div>
           </div>
+          {/* Área de contenido */}
           <Outlet />
         </div>
       </div>

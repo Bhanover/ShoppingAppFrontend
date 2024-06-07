@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./CarruselCategoriesStore.css";
 import BASE_URL from "../../Enviroment";
 
@@ -14,6 +14,7 @@ const CarruselCategoriesStore = ({ categoryNameWithId }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const categoryName = categoryNameWithId
     ? categoryNameWithId.split("-")[0]
     : null;

@@ -1,12 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Asumiendo que estás usando react-router para la navegación
-import "./AdminManagement.css"; // Asegúrate de crear este archivo CSS para estilizar tu componente
+import { Link } from "react-router-dom";
+import "./AdminManagement.css";
 
+// Componente para el panel de administración
 const AdminManagement = () => {
   return (
     <div className="adminManagement">
       <h2>Panel de Administración</h2>
       <div className="managementOptions">
+        {/* Enlaces a las diferentes secciones de gestión */}
         <Link to="/category" className="option">
           Gestión de Categorías
         </Link>
@@ -16,7 +18,6 @@ const AdminManagement = () => {
         <Link to="/user-management" className="option">
           Gestión de Usuarios
         </Link>
-        {/* Agrega más opciones según sea necesario */}
       </div>
     </div>
   );

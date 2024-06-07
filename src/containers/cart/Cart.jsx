@@ -8,11 +8,13 @@ import CheckoutButton from "../../components/checkoutButton/CheckoutButton";
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useContext(CartContext);
 
+  // Calcular el total del carrito
   const total = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
 
+  // Manejar el cambio en la cantidad de un producto
   const handleQuantityChange = (id, sizeLabel, change) => {
     const currentItem = cartItems.find(
       (item) => item.id === id && item.selectedSizeLabel === sizeLabel
@@ -25,6 +27,7 @@ const Cart = () => {
     }
   };
 
+  // Manejar el proceso de checkout
   const handleCheckout = () => {
     console.log("Procesando el pedido...");
   };

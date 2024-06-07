@@ -28,7 +28,7 @@ const TopBar = () => {
   const menuRef = useRef(null);
   const [searchValue, setSearchValue] = useState("");
   const [categorias, setCategorias] = useState({ Mujer: [], Hombre: [] });
-
+  // Obtener categorías desde la API
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
@@ -51,7 +51,7 @@ const TopBar = () => {
       document.body.style.overflow = "auto";
     }
   };
-
+  // Manejar el cambio en el campo de búsqueda
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };

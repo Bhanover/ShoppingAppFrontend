@@ -8,30 +8,38 @@ const NewsletterSignUp = () => {
   const [formExpanded, setFormExpanded] = useState(false);
   const [unSubscribe, setUnSubscribe] = useState(false);
 
+  // Manejar el cambio de valor del email
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
+  // Expander el formulario al hacer clic en el campo de email
   const handleEmailClick = () => {
     setFormExpanded(true);
   };
 
+  // Manejar el cambio de género
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
 
+  // Manejar el cambio en la aceptación de las políticas de privacidad
   const handlePrivacyPolicyChange = (event) => {
     setPrivacyPolicyChecked(event.target.checked);
   };
 
+  // Manejar la suscripción
   const handleSubscribe = (event) => {
     event.preventDefault();
+    // Aquí iría el código para manejar la suscripción
   };
 
+  // Alternar el estado de baja de la suscripción
   const handleUnsubscribeClick = () => {
     setUnSubscribe(!unSubscribe);
   };
 
+  // Manejar la baja de la suscripción
   const handleUnsubscribe = (event) => {
     event.preventDefault();
     setEmail("");

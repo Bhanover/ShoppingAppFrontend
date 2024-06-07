@@ -8,20 +8,25 @@ const UserLogin = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
+  // Manejar el cambio en los campos del formulario
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Manejar el envío del formulario
   const onSubmit = (e) => {
     e.preventDefault();
 
     axios
       .post(BASE_URL + `/api/session`, formData)
       .then((response) => {
+        // Guardar el token JWT en el localStorage
         localStorage.setItem("jwtToken", response.data.jwtToken);
         console.log(response.data);
+        // Verificar si el usuario es administrador
         const isAdmin = response.data.roles.includes("ROLE_ADMIN");
         localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
+        // Redirigir al usuario según su rol
         isAdmin ? navigate("/admin-dashboard/management") : navigate("/");
       })
       .catch((error) => {
@@ -54,7 +59,6 @@ const UserLogin = () => {
               onChange={onChange}
             />
           </div>
-
           <button type="submit" className="submit-button">
             Login
           </button>

@@ -10,6 +10,7 @@ const DeleteClothingItem = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    // Obtener productos al montar el componente
     const fetchProducts = async () => {
       try {
         const items = await ClothesService.getClothingItemNameAndId();
@@ -22,6 +23,7 @@ const DeleteClothingItem = () => {
     fetchProducts();
   }, []);
 
+  // Manejar la eliminación de un producto
   const handleDelete = async (id) => {
     try {
       await ClothesService.deleteClothingItem(id);

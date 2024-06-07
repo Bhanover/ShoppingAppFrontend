@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 
+// Crear el contexto del carrito de compras
 export const CartContext = createContext({
   cartItems: [],
   addToCart: () => {},
@@ -8,11 +9,11 @@ export const CartContext = createContext({
   cartCount: 0,
 });
 
+// Proveedor del contexto del carrito de compras
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  // Dentro de CartProvider
-
+  // Añadir producto al carrito
   const addToCart = (product, selectedSize) => {
     console.log("Añadiendo producto al carrito:", product, selectedSize);
 
@@ -28,7 +29,7 @@ export const CartProvider = ({ children }) => {
     );
 
     if (existingProductIndex !== -1) {
-      // El producto con el mismo tamaño ya está en el carrito, solo incrementa la cantidad
+      // Si el producto con el mismo tamaño ya está en el carrito, solo incrementa la cantidad
       const newCartItems = cartItems.map((item, index) =>
         index === existingProductIndex
           ? { ...item, quantity: item.quantity + 1 }
@@ -41,6 +42,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  // Remover producto del carrito
   const removeFromCart = (productId, sizeLabel) => {
     setCartItems(
       cartItems.filter(
@@ -49,6 +51,7 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  // Actualizar la cantidad de un producto en el carrito
   const updateQuantity = (productId, selectedSizeLabel, quantity) => {
     setCartItems((currentItems) =>
       currentItems.map((item) =>
@@ -58,7 +61,10 @@ export const CartProvider = ({ children }) => {
       )
     );
   };
+
+  // Contar el número de productos en el carrito
   const cartCount = cartItems.length;
+
   return (
     <CartContext.Provider
       value={{

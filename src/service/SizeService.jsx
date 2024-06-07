@@ -12,6 +12,7 @@ const getConfig = () => {
 };
 
 const SizeService = {
+  // Obtener todos los tamaños para el administrador
   fetchAdminSizes: async () => {
     try {
       const response = await axios.get(
@@ -25,4 +26,5 @@ const SizeService = {
     }
   },
 };
+
 export default SizeService;

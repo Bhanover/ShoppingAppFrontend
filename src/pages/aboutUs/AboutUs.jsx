@@ -7,16 +7,18 @@ import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
   const navigate = useNavigate();
+
   return (
     <div className="aboutUsContainer">
       <Helmet>
-        <title>Store Sobre Nosotros </title>
+        <title>Store Sobre Nosotros</title>
         <meta
           name="description"
           content="Conoce más sobre Store: Nuestra historia, misión, visión y valores. Comprometidos con la moda sostenible y la excelencia en el servicio al cliente."
         />
       </Helmet>
 
+      {/* Sección de introducción */}
       <section className="intro">
         <h1>Bienvenidos a Shop.shop</h1>
         <img src="/images/logo.png" alt="logo" />
@@ -28,6 +30,7 @@ const AboutUs = () => {
         </p>
       </section>
 
+      {/* Sección de nuestra historia */}
       <section className="ourStory">
         <h2>Nuestra Historia</h2>
         <p>
@@ -38,6 +41,7 @@ const AboutUs = () => {
         </p>
       </section>
 
+      {/* Sección de misión y visión */}
       <section className="missionVision">
         <h2>Misión y Visión</h2>
         <p>
@@ -48,6 +52,7 @@ const AboutUs = () => {
         </p>
       </section>
 
+      {/* Sección de nuestros valores */}
       <section className="ourValues">
         <h2>Nuestros Valores</h2>
         <ul>
@@ -62,6 +67,7 @@ const AboutUs = () => {
         </ul>
       </section>
 
+      {/* Sección de información de contacto */}
       <section className="contactInfo">
         <h2>Contacto</h2>
         <p>
@@ -73,6 +79,7 @@ const AboutUs = () => {
         </Link>
       </section>
 
+      {/* Sección de compromiso con los clientes */}
       <section className="customerCommitment">
         <h2>Compromiso con Nuestros Clientes</h2>
         <p>
@@ -81,6 +88,7 @@ const AboutUs = () => {
         </p>
       </section>
 
+      {/* Sección de sostenibilidad y responsabilidad social */}
       <section className="sustainability">
         <h2>Sostenibilidad y Responsabilidad Social</h2>
         <p>

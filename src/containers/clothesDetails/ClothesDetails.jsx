@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import "swiper/css/zoom";
 import Select from "react-select";
 import axios from "axios";
-
 import "./ClothesDetails.css";
 import ImageMagnifier from "./ImageMagnifier";
 import AddToCartButton from "../../components/add_to_cart_button/AddToCartButton";
@@ -20,11 +19,14 @@ const ClothesDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [item, setItem] = useState(null);
+
   const productName = productNameWithId
     ? productNameWithId.split("-")[0]
     : null;
   const productId = productNameWithId ? productNameWithId.split("-")[1] : null;
+
   useEffect(() => {
+    // Obtener detalles del producto
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(
@@ -38,9 +40,11 @@ const ClothesDetails = () => {
 
     fetchProductDetails();
   }, [productId]);
+
   useEffect(() => {
     setSelectedSize(null);
   }, [productId]);
+
   if (!item) {
     return (
       <div>
@@ -49,6 +53,7 @@ const ClothesDetails = () => {
     );
   }
 
+  // Manejar cambio de tamaño seleccionado
   const handleChange = (selectedOption) => {
     setSelectedSize(selectedOption);
   };
@@ -61,6 +66,7 @@ const ClothesDetails = () => {
   return (
     <div className="clothesDetails">
       <div className="clothesDetails-image-container">
+        {/* Thumbnails del producto */}
         <Swiper
           onSwiper={setThumbsSwiper}
           spaceBetween={10}
@@ -80,6 +86,8 @@ const ClothesDetails = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {/* Imágenes principales del producto */}
         <Swiper
           modules={[Navigation, Pagination, Zoom, Thumbs]}
           zoom={true}
@@ -104,6 +112,7 @@ const ClothesDetails = () => {
           ))}
         </Swiper>
       </div>
+
       <div className="clothesDetails-info-container">
         <div className="clothesDetails-info-container-details">
           <h1>{item.name}</h1>
@@ -111,6 +120,7 @@ const ClothesDetails = () => {
           <p>{item.description}</p>
         </div>
         <div className="clothesDetails-info-container-options">
+          {/* Selección de tamaño */}
           <Select
             placeholder="Size"
             maxMenuHeight={200}
@@ -119,6 +129,7 @@ const ClothesDetails = () => {
             options={sizeOptions}
             classNamePrefix="custom-select"
           />
+          {/* Botón para añadir al carrito */}
           <AddToCartButton product={item} selectedSize={selectedSize} />
         </div>
       </div>

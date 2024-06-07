@@ -12,14 +12,17 @@ const Store = () => {
   const { categoryNameWithId, subCategoryNameWithId } = useParams();
 
   useEffect(() => {
+    // Redirigir a "/store/novedades" si la ruta es "/store"
     if (location.pathname === "/store") {
       navigate("/store/novedades", { replace: true });
     }
   }, [location.pathname, navigate]);
 
   const handleBackClick = () => {
+    // Navegar hacia atrás en el historial
     navigate(-1);
   };
+
   return (
     <div className="store">
       {categoryNameWithId !== "novedades" && (

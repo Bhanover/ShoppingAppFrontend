@@ -37,18 +37,20 @@ const AddClothingItem = () => {
   });
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedStock, setSelectedStock] = useState("");
+  // Función para reiniciar las imágenes
   const resetImages = () => {
     setFormData({ ...formData, images: [] });
     const inputs = document.querySelectorAll('input[type="file"]');
     inputs.forEach((input) => (input.value = ""));
   };
-
+  // Función para eliminar una imagen específica
   const removeImage = (index) => {
     setFormData({
       ...formData,
       images: formData.images.filter((_, i) => i !== index),
     });
   };
+  // Efecto para obtener categorías y tamaños al montar el componente
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -74,11 +76,11 @@ const AddClothingItem = () => {
     fetchCategories();
     fetchSizes();
   }, []);
-
+  // Manejar cambios en los inputs del formulario
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  // Manejar selección de categoría
   const handleCategoryChange = (selectedOption) => {
     if (selectedOption) {
       setFormData({ ...formData, categoryId: selectedOption.value });
@@ -89,13 +91,13 @@ const AddClothingItem = () => {
       setSubCategories(selectedCategory?.subCategories || []);
     }
   };
-
+  // Manejar selección de subcategoría
   const handleSubCategoryChange = (selectedOption) => {
     if (selectedOption) {
       setFormData({ ...formData, subCategoryId: selectedOption.value });
     }
   };
-
+  // Manejar selección del tipo de tamaño
   const handleSizeTypeChange = (selectedOption) => {
     if (selectedOption) {
       setSizeType(selectedOption.value);
@@ -104,12 +106,12 @@ const AddClothingItem = () => {
       setSelectedStock(0);
     }
   };
-
+  // Filtrar tamaños según el tipo seleccionado
   const filterSizes = (type) => {
     const filtered = sizes.filter((size) => size.sizeType === type);
     setFilteredSizes(filtered);
   };
-
+  // Manejar el envío del formulario
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (formData.images.length === 0) {
@@ -145,6 +147,7 @@ const AddClothingItem = () => {
       setLoading(false);
     }
   };
+  // Opciones para los selectores
   const categoryOptions = categories.map((cat) => ({
     value: cat.id,
     label: cat.name,
@@ -166,7 +169,7 @@ const AddClothingItem = () => {
     { value: "secondary", label: "Secundario" },
     { value: "additional", label: "Adicional" },
   ];
-
+  // Manejar archivos seleccionados
   const getFiles = (files) => {
     const images = files.map((file, index) => ({
       name: file.name,
@@ -180,6 +183,7 @@ const AddClothingItem = () => {
       images: [...prevFormData.images, ...images],
     }));
   };
+  // Actualizar el orden de las imágenes
   const updateImageOrder = (index, order) => {
     const updatedImages = formData.images.map((img, i) => {
       if (i === index) {
@@ -190,6 +194,7 @@ const AddClothingItem = () => {
 
     setFormData({ ...formData, images: updatedImages });
   };
+  // Eliminar una variante de tamaño
   const removeVariant = (sizeIdToRemove) => {
     setFormData({
       ...formData,
@@ -198,7 +203,7 @@ const AddClothingItem = () => {
       ),
     });
   };
-
+  // Agregar una variante de tamaño
   const addVariant = () => {
     if (!selectedSize) {
       toast.error("Por favor, seleccione un tamaño antes de agregar.");
@@ -231,7 +236,7 @@ const AddClothingItem = () => {
     setSelectedSize(null);
     setSelectedStock(0);
   };
-
+  // Actualizar el tipo de imagen
   const updateImageType = (index, newType) => {
     const updatedImages = formData.images.map((img, i) => {
       if (i === index) {
@@ -242,7 +247,7 @@ const AddClothingItem = () => {
 
     setFormData({ ...formData, images: updatedImages });
   };
-
+  // Manejar selección de tamaño
   const handleSizeSelect = (selectedOption) => {
     setSelectedSize(selectedOption);
     setSelectedStock("");

@@ -1,3 +1,4 @@
+//Página de mantenimiento
 const MantainerScreen = () => {
   return (
     <div className="flex justify-center items-center h-screen px-4 ">

@@ -27,6 +27,7 @@ const SubCategoryManagement = () => {
     loadCategories();
     loadSubCategories();
   }, []);
+  // Cargar categorías desde el servicio
   const loadCategories = async () => {
     try {
       const res = await CategoryService.obtainSimpleCategories();
@@ -39,6 +40,7 @@ const SubCategoryManagement = () => {
       toast.error("Error cargando las categorías");
     }
   };
+  // Cargar subcategorías desde el servicio
   const loadSubCategories = async () => {
     setLoadingSubCategories(true);
     try {
@@ -50,7 +52,7 @@ const SubCategoryManagement = () => {
       setLoadingSubCategories(false);
     }
   };
-
+  // Manejar la adición de una nueva subcategoría
   const handleAddSubCategory = async () => {
     setLoading(true);
     if (
@@ -110,11 +112,12 @@ const SubCategoryManagement = () => {
 */
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleteCandidateId, setDeleteCandidateId] = useState(null);
-
+  // Solicitar confirmación para eliminar una subcategoría
   const requestDelete = (id) => {
     setModalIsOpen(true);
     setDeleteCandidateId(id);
   };
+  // Manejar la eliminación de una subcategoría
   const handleDeleteSubCategory = async () => {
     if (deleteCandidateId) {
       try {
@@ -127,12 +130,12 @@ const SubCategoryManagement = () => {
     }
     closeAndResetModal();
   };
-
+  // Cerrar y resetear el modal de confirmación
   const closeAndResetModal = () => {
     setModalIsOpen(false);
     setDeleteCandidateId(null);
   };
-
+  // Manejar el cambio de categoría seleccionada
   const handleCategoryChange = (selectedOption) => {
     setSelectedCategory(selectedOption);
   };

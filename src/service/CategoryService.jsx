@@ -13,6 +13,7 @@ const getConfig = () => {
 };
 
 const CategoryService = {
+  // Añadir una categoría con imagen
   addCategoryWithImageNew: async (name, description, imageFile) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -31,6 +32,8 @@ const CategoryService = {
       throw error;
     }
   },
+
+  // Obtener todas las categorías para el administrador
   fetchAdminCategories: async () => {
     try {
       const response = await axios.get(
@@ -43,6 +46,8 @@ const CategoryService = {
       throw error;
     }
   },
+
+  // Actualizar una categoría con imagen
   updateCategoryWithImage: async (id, formData) => {
     try {
       const response = await axios.put(
@@ -57,6 +62,7 @@ const CategoryService = {
     }
   },
 
+  // Borrar una categoría
   deleteCategory: async (id) => {
     try {
       await axios.delete(
@@ -68,6 +74,8 @@ const CategoryService = {
       throw error;
     }
   },
+
+  // Obtener categorías simples
   obtainSimpleCategories: async () => {
     try {
       const response = await axios.get(
@@ -80,6 +88,8 @@ const CategoryService = {
       throw error;
     }
   },
+
+  // Obtener nombres de categorías
   fetchCategoriesName: async () => {
     try {
       const response = await axios.get(
@@ -93,4 +103,5 @@ const CategoryService = {
     }
   },
 };
+
 export default CategoryService;

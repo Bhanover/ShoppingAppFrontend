@@ -23,20 +23,28 @@ const Container = () => {
       setIsVisible(true);
     }
   }, []);
+
   return (
     <div className="container">
+      {/* Barra superior */}
       <div className="container-top">
         <TopBar />
       </div>
+
+      {/* Banner de cookies */}
       {isVisible && (
         <CookieBanner isVisible={isVisible} setIsVisible={setIsVisible} />
       )}
+
+      {/* Contenido principal */}
       <div className="container-outlet">
         <Outlet />
         <div className="container-whatsAppButton">
           <WhatsAppButton />
         </div>
       </div>
+
+      {/* Barra inferior, se muestra si no estamos en la página principal */}
       {location.pathname !== "/" && (
         <div className="container-bottombar">
           <BottomBar />

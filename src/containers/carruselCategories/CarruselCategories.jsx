@@ -9,7 +9,6 @@ import "swiper/css/pagination";
 import { Link } from "react-router-dom";
 import "./CarruselCategories.css";
 import BASE_URL from "../../Enviroment";
-import Loader from "../../loaders/Loader";
 import LoaderPage from "../../loaders/LoaderPage";
 
 const CarruselCategories = () => {
@@ -18,6 +17,7 @@ const CarruselCategories = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Obtener categorías desde el servidor
     const fetchCategories = async () => {
       try {
         const response = await axios.get(

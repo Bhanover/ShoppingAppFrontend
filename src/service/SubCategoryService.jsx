@@ -1,6 +1,7 @@
 import axios from "axios";
 import BASE_URL from "../Enviroment";
 
+// Función para obtener la configuración actualizada con el JWT más reciente
 const getConfig = () => {
   const jwtToken = localStorage.getItem("jwtToken");
   return {
@@ -11,6 +12,7 @@ const getConfig = () => {
 };
 
 const SubCategoryService = {
+  // Añadir una nueva subcategoría con imagen
   addSubCategory: async (name, description, imageFile, categoryId) => {
     const formData = new FormData();
     formData.append("name", name);
@@ -31,6 +33,7 @@ const SubCategoryService = {
     }
   },
 
+  // Obtener todas las subcategorías
   obtainSubCategories: async () => {
     try {
       const response = await axios.get(
@@ -44,6 +47,7 @@ const SubCategoryService = {
     }
   },
 
+  // Borrar una subcategoría por ID
   deleteSubCategory: async (id) => {
     try {
       await axios.delete(
@@ -56,4 +60,5 @@ const SubCategoryService = {
     }
   },
 };
+
 export default SubCategoryService;

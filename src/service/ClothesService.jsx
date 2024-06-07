@@ -12,6 +12,7 @@ const getConfig = () => {
 };
 
 const ClothesService = {
+  // Obtener nombres e IDs de los productos de ropa
   getClothingItemNameAndId: async () => {
     try {
       const response = await axios.get(
@@ -25,6 +26,7 @@ const ClothesService = {
     }
   },
 
+  // Eliminar un artículo de ropa por ID
   deleteClothingItem: async (id) => {
     try {
       await axios.delete(
@@ -37,6 +39,7 @@ const ClothesService = {
     }
   },
 
+  // Agregar un nuevo artículo de ropa
   addClothingItem: async (formData) => {
     try {
       const response = await axios.post(

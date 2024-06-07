@@ -1,7 +1,7 @@
 import React from "react";
 import "./NotFound.css";
 import { Link } from "react-router-dom";
-
+// Página de notFound
 const NotFound = () => {
   return (
     <div className="notfoundMain">

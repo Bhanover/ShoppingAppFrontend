@@ -8,20 +8,26 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 const Clothes = () => {
   const { categoryNameWithId, subCategoryNameWithId } = useParams();
   const navigate = useNavigate();
+
+  // Manejar el clic del botón para ir hacia atrás en el historial
   const handleBackClick = () => {
     navigate(-1);
   };
+
   return (
     <div className="clothes">
       <div className="clothes-container">
+        {/* Botón de retroceso */}
         <FontAwesomeIcon
           icon={faArrowLeftLong}
           onClick={handleBackClick}
           className="clothes-back-button"
         />
+        {/* Detalles de ropa */}
         <ClothesDetails />
       </div>
       <div>
+        {/* Componente de tienda infinita */}
         <InfiniteStore
           subCategoryNameWithId={subCategoryNameWithId}
           categoryNameWithId={categoryNameWithId}
@@ -30,4 +36,5 @@ const Clothes = () => {
     </div>
   );
 };
+
 export default Clothes;
